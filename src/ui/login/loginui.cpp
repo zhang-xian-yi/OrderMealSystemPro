@@ -15,13 +15,9 @@ LoginUi::LoginUi(QWidget *parent) :
     init();
     connect(this,SIGNAL(close()),this,SLOT(close()));
 
-    /*
-    QStringList strList;
-    strList << "点餐系统登陆" << "Login v1.0";
-    QIcon icon(":/appfile/images/login/trayicon.ico");
-    trayIcon = new SystemTrayIcon(strList, icon, this);
-    connect(trayIcon, SIGNAL(signal_showWin()), this, SLOT(slot_trayIcon()));
-    */
+    //设置最大窗口大小
+    this->setMaximumSize(427,330);
+    this->setMinimumSize(427,330);
     //隐藏任务栏图标
     Qt::WindowFlags flags = windowFlags();
     flags |= Qt::WindowStaysOnTopHint | Qt::Tool;
@@ -140,7 +136,7 @@ void LoginUi::set_user_img(bool isSandom, int index_img)
     user_img.load(user_img_path);
     QPixmap img_pic=QPixmap::fromImage(user_img.scaled(ui->label_user_img->width(),
                                                        ui->label_user_img->height()));
-                                       ui->label_user_img->setPixmap(img_pic);
+    ui->label_user_img->setPixmap(img_pic);
 }
 
 void LoginUi::set_button()

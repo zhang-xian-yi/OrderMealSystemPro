@@ -69,8 +69,35 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget{
+
+border : none;
+
+color: rgb(0,27,47);
+
+font: 9pt &quot;微软雅黑&quot;;
+
+}
+
+QWidget:hover{
+
+border-width : 1px;
+
+border-color : #1ea4f2;
+
+border-style : solid;
+
+border-width : 1px;
+
+}</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_edit_pwd">
@@ -108,8 +135,43 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>9</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+
+border-width : 1px;
+
+border-color : rgb(255,255,255);
+
+border-style : solid;
+
+color: rgb(0,27,47);
+
+font: 9pt &quot;微软雅黑&quot;;
+
+}
+
+QComboBox:hover {
+
+border-width : 1px;
+
+border-color : #1ea4f2;
+
+border-style : solid;
+
+}
+
+QComboBox::drop-down {
+
+/*image: url(:/CIO/Image/Logon/btn_combobox_normal.png);/*
+
+}</string>
    </property>
    <property name="editable">
     <bool>true</bool>
@@ -144,17 +206,35 @@
   <widget class="QPushButton" name="btn_login">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>130</x>
      <y>290</y>
-     <width>100</width>
+     <width>191</width>
      <height>26</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+border-radius:8px;
+background-color: rgb(8,164,218);
+font: 9pt &quot;微软雅黑&quot;;
+wid
+/*border-image: url(:/CIO/Image/Logon/button_login_normal.png);*/
+
+}
+
+QPushButton:hover{
+background-color:rgb(230,206,149)
+/*border-image: url(:/CIO/Image/Logon/button_login_hover.png);
+*/
+}
+
+</string>
    </property>
    <property name="text">
     <string>登录</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>131</x>
@@ -180,7 +260,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>258</x>

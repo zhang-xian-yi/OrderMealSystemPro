@@ -9,7 +9,7 @@ QT       += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TEMPLATE = app
-TARGET = OrderMealSystemPro
+TARGET = OrderMeal
 
 
 # The following define makes your compiler emit warnings if you use
@@ -22,26 +22,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-INCLUDEPATH += $$PWD/src/mainwidgets/
+#include path
+INCLUDEPATH += $$PWD/src/mainapp/
 INCLUDEPATH += $$PWD/src/public/
 INCLUDEPATH += $$PWD/src/ui/login/
 INCLUDEPATH += $$PWD/src/ui/systemtrayicon/
 INCLUDEPATH += $$PWD/src/utils/confighelperutil/
 INCLUDEPATH += $$PWD/src/utils/encryputil/
 
+#module
 include(src/public/public.pri)
-include(src/mainwidgets/mainwidgets.pri)
+include(src/mainapp/mainapp.pri)
 include(src/ui/ui.pri)
 include(src/utils/utils.pri)
 
-
-RESOURCES += login.qrc
-
+# generate file path
 MOC_DIR = $$PWD/CompileTheGeneratedFile/temp/moc
 RCC_DIR = $$PWD/CompileTheGeneratedFile/temp/rccr
 OBJECTS_DIR = $$PWD/CompileTheGeneratedFile/temp/obj
 UI_HEADERS_DIR = $$PWD/CompileTheGeneratedFile/temp/ui
 DESTDIR = $$PWD/CompileTheGeneratedFile/bin
 
-win32:RC_FILE = OrderMeal.rc
-RESOURCES += login.qrc
+win32:RC_FILE = $$PWD/appfile/config/OrderMeal.rc
+RESOURCES += appfile/config/login.qrc
