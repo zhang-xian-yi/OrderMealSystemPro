@@ -75,7 +75,7 @@ void LoginUi::configWindow()
     QPalette palette;
     palette.setBrush(/*QPalette::Background*/this->backgroundRole(),
                       //QBrush(QPixmap(":appfile/images/login/QQ1.png")));
-                        QBrush(QPixmap(":appfile/images/login/background.png")));
+                        QBrush(QPixmap(":/appfile/images/login/background.png")));
     this->setPalette(palette);
     //去掉窗口边框
     setWindowFlags(Qt::FramelessWindowHint);
@@ -104,9 +104,9 @@ void LoginUi::set_top_img(bool isSandom, int index_img)
     {
         set_index_img = index_img;
     }
-    QString top_img_path=":appfile/images/login/top_img1.png";
+    QString top_img_path=":/appfile/images/login/top_img1.png";
     QImage top_img;
-    top_img_path = ":appfile/images/login/top_img" + QString::number(set_index_img, 10)  + ".png";
+    top_img_path = ":/appfile/images/login/top_img" + QString::number(set_index_img, 10)  + ".png";
     top_img.load(top_img_path);
     QPixmap top_pic=QPixmap::fromImage(top_img.scaled(ui->label_top_img->width(),ui->label_top_img->height()));
     ui->label_top_img->setPixmap(top_pic);
@@ -129,10 +129,10 @@ void LoginUi::set_user_img(bool isSandom, int index_img)
         set_index_img = index_img;
     }
 
-    QString user_img_path=":appfile/images/login/ico/user1.png";
+    QString user_img_path=":/appfile/images/login/ico/user1.png";
 
     QImage user_img;
-    user_img_path = ":appfile/images/login/ico/user" + QString::number(set_index_img, 10)  + ".png";
+    user_img_path = ":/appfile/images/login/ico/user" + QString::number(set_index_img, 10)  + ".png";
     user_img.load(user_img_path);
     QPixmap img_pic=QPixmap::fromImage(user_img.scaled(ui->label_user_img->width(),
                                                        ui->label_user_img->height()));

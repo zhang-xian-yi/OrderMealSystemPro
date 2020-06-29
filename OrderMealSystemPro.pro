@@ -43,5 +43,8 @@ OBJECTS_DIR = $$PWD/CompileTheGeneratedFile/temp/obj
 UI_HEADERS_DIR = $$PWD/CompileTheGeneratedFile/temp/ui
 DESTDIR = $$PWD/CompileTheGeneratedFile/bin
 
-win32:RC_FILE = $$PWD/appfile/config/OrderMeal.rc
-RESOURCES += appfile/config/login.qrc
+
+#资源文件
+win32:RC_FILE = $$PWD/OrderMeal.rc
+RESOURCES += $$PWD/login.qrc
+RESOURCES += $$PWD/startApp.qrc
