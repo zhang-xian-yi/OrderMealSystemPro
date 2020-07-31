@@ -9,14 +9,6 @@
 #include <QAction>
 #include <QActionGroup>
 
-
-struct UserInfo{
-    QString userName;
-    QString passwd;
-    QString email;
-};
-
-
 namespace Ui {
 class LoginUi;
 }
@@ -38,6 +30,8 @@ private:
     void set_button();
     //设置UI上用户头像
     void set_user_img(bool isSandom, int index_img);
+    //初始化 connct 函数
+    void init_connect_func();
 protected:
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
@@ -52,13 +46,13 @@ private slots:
     void slot_closeWindow();
     void slot_trayIcon();
     void slot_setLanguage();
-    /*
-    void on_cBox_account_activated(int index);
+
+    // response func
     void on_btn_login_clicked();
     void on_btn_regist_clicked();
     void on_btn_edit_pwd_clicked();
+    void on_cBox_account_activated(int index);
     void on_cBox_account_currentIndexChanged(int index);
-    */
 private:
     Ui::LoginUi *ui;
     bool m_Drag;
@@ -67,10 +61,8 @@ private:
     QTimer *timer2;
     //btn response
     QToolButton *minBtn;
-    QToolButton *closeBbtn;
+    QToolButton *closeBtn;
     QToolButton *setBtn;
-    //System Tray Icon
-    //SystemTrayIcon *trayIcon;
 };
 
 #endif // LOGINUI_H

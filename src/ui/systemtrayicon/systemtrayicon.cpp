@@ -57,7 +57,7 @@ void SystemTrayIcon::createAct()
     actNormal = new QAction("还 原(&R)",this);
     connect(actNormal,SIGNAL(triggered()),pWidget,SLOT(showNormal()));
     actExit = new QAction("退出(&Q)",this);
-    connect(actExit,SIGNAL(triggered()),qApp,SLOT(quit()));
+    connect(actExit,SIGNAL(triggered()),this,SLOT(slot_app_exit()));
 }
 
 void SystemTrayIcon::createTrayMenu()
@@ -84,6 +84,12 @@ void SystemTrayIcon::createTrayIcon()
     m_trayIcon->show();
     connect(m_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
             SLOT(slot_iconActivated(QSystemTrayIcon::ActivationReason)));
+}
+
+void SystemTrayIcon::slot_app_exit()
+{
+    pWidget->close();
+    this->close();
 }
 
 void SystemTrayIcon::slot_iconActivated(QSystemTrayIcon::ActivationReason reason)

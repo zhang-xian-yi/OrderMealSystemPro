@@ -23,25 +23,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 #include path
-INCLUDEPATH += $$PWD/src/mainapp/
-INCLUDEPATH += $$PWD/src/public/
-INCLUDEPATH += $$PWD/src/ui/login/
-INCLUDEPATH += $$PWD/src/ui/systemtrayicon/
-INCLUDEPATH += $$PWD/src/utils/confighelperutil/
-INCLUDEPATH += $$PWD/src/utils/encryputil/
+
 
 #module
 include(src/public/public.pri)
 include(src/mainapp/mainapp.pri)
 include(src/ui/ui.pri)
 include(src/utils/utils.pri)
+#include(src/databases/databases.pri)
+#include(src/service/service.pri)
 
 # generate file path
-MOC_DIR = $$PWD/CompileTheGeneratedFile/temp/moc
-RCC_DIR = $$PWD/CompileTheGeneratedFile/temp/rccr
-OBJECTS_DIR = $$PWD/CompileTheGeneratedFile/temp/obj
-UI_HEADERS_DIR = $$PWD/CompileTheGeneratedFile/temp/ui
-DESTDIR = $$PWD/CompileTheGeneratedFile/bin
+#MOC_DIR = $$PWD/CompileTheGeneratedFile/temp/moc
+#RCC_DIR = $$PWD/CompileTheGeneratedFile/temp/rccr
+#OBJECTS_DIR = $$PWD/CompileTheGeneratedFile/temp/obj
+#UI_HEADERS_DIR = $$PWD/CompileTheGeneratedFile/temp/ui
+#DESTDIR = $$PWD/CompileTheGeneratedFile/bin
 
 
 #资源文件

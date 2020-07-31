@@ -1,4 +1,4 @@
-#include <QFile>
+﻿#include <QFile>
 #include <QTextCodec>
 
 #include "confighelperutil.h"
@@ -11,7 +11,6 @@
 
 ConfigHelperUtil::ConfigHelperUtil(const QString& filepath)
 {
-    EncrypUtil::decryptFile(filepath);
     initSetting(filepath);
 }
 

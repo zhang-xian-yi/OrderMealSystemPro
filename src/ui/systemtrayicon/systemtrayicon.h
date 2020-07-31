@@ -22,7 +22,7 @@ signals:
     void signal_showWin();          //显示窗口
 public slots:
     void slot_iconActivated(QSystemTrayIcon::ActivationReason reason);
-
+    void slot_app_exit();
 private:
     QSystemTrayIcon *m_trayIcon;        //系统托盘
     QMenu *menu;                        //菜单

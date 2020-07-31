@@ -2,9 +2,21 @@
 #include "ui_loginui.h"
 
 #include <QTime>
+#include <QDesktopServices>
+#include "confighelperutil.h"
 
 #pragma execution_character_set("utf-8")
 
+//全局变量--静态 QStringlist
+static QStringList user_pass_list;
+//声明用户信息的类
+class UserInfo{
+public:
+    QString userName;
+    QString passwd;
+    //身份
+    QString identity;
+};
 LoginUi::LoginUi(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LoginUi)
@@ -18,6 +30,8 @@ LoginUi::LoginUi(QWidget *parent) :
     //设置最大窗口大小
     this->setMaximumSize(427,330);
     this->setMinimumSize(427,330);
+    //关闭窗口释放内存
+    this->setAttribute(Qt::WA_DeleteOnClose);
     //隐藏任务栏图标
     Qt::WindowFlags flags = windowFlags();
     flags |= Qt::WindowStaysOnTopHint | Qt::Tool;
@@ -39,9 +53,9 @@ LoginUi::~LoginUi()
     {
         delete minBtn;
     }
-    if(nullptr != closeBbtn)
+    if(nullptr != closeBtn)
     {
-        delete closeBbtn;
+        delete closeBtn;
     }
     if(nullptr != setBtn)
     {
@@ -67,6 +81,13 @@ void LoginUi::init()
     //init记住密码
     ui->checkBox_rPasswd->setChecked(true);
     ui->lineEdit_passwd->setEchoMode(QLineEdit::Password);
+    //init connect
+    init_connect_func();
+}
+
+void LoginUi::init_connect_func()
+{
+    connect(ui->cBox_account,SIGNAL(clicked()),this,SLOT(on_cBox_account_activated()));
 }
 
 void LoginUi::configWindow()
@@ -143,32 +164,32 @@ void LoginUi::set_button()
 {
     //构建最小化、关闭按钮,设置按钮，键盘ico
     minBtn = new QToolButton(this);
-    closeBbtn = new QToolButton(this);
+    closeBtn = new QToolButton(this);
     setBtn = new QToolButton(this);
 
     //获取界面的宽度
     int width = this->width();
     //设置最小化、关闭按钮在界面的位置
     minBtn->setGeometry(width-55,5,20,20);
-    closeBbtn->setGeometry(width-25,5,20,20);
+    closeBtn->setGeometry(width-25,5,20,20);
     setBtn->setGeometry(width-80,7,15,15);
 
     //设置鼠标移至按钮上的提示信息
     minBtn->setToolTip(tr("最小化"));
-    closeBbtn->setToolTip(tr("关闭"));
+    closeBtn->setToolTip(tr("关闭"));
     setBtn->setToolTip(tr("设置"));
 
     //设置最小化、关闭按钮的样式图标
     minBtn->setIcon(QIcon(":/appfile/images/login/ico/mini.png"));
     minBtn->setStyleSheet("background-color:transparent;");
-    closeBbtn->setIcon(QIcon(":/appfile/images/login/ico/close.png"));
-    closeBbtn->setStyleSheet("background-color:transparent;");
+    closeBtn->setIcon(QIcon(":/appfile/images/login/ico/close.png"));
+    closeBtn->setStyleSheet("background-color:transparent;");
     setBtn->setIcon(QIcon(":/appfile/images/login/ico/setting.png"));
     setBtn->setStyleSheet("background-color:transparent;");
 
     //关联最小化、关闭按钮的槽函数,键盘exe
     connect(minBtn, SIGNAL(clicked()), this, SLOT(slot_minWindow()));
-    connect(closeBbtn, SIGNAL(clicked()), this, SLOT(slot_closeWindow()));
+    connect(closeBtn, SIGNAL(clicked()), this, SLOT(slot_closeWindow()));
     connect(setBtn, SIGNAL(clicked()), this, SLOT(slot_setLanguage()));
 }
 
@@ -257,3 +278,46 @@ void LoginUi::slot_timer2()
     setWindowOpacity(opacity2);//设置窗口透明度
 }
 
+
+void LoginUi::on_cBox_account_activated(int index)
+{
+    ui->lineEdit_passwd->setText(user_pass_list.at(index));
+    on_cBox_account_currentIndexChanged(index);
+}
+
+
+//下拉框选里面的项时，会切换top_img的图片和头像图片
+void LoginUi::on_cBox_account_currentIndexChanged(int index)
+{
+   static int flag = -1;
+   //如果相同就无需在进行替换图片了
+   if(flag == index)
+   {
+       flag = index;
+       return;
+   }
+   set_top_img(true,index);
+   set_user_img(true,index);
+}
+
+
+
+
+void LoginUi::on_btn_login_clicked()
+{
+
+}
+void LoginUi::on_btn_regist_clicked()
+{
+    QString str_url =ConfigHelperUtil::getInstance().getValue("LoginConfig","register_url");
+    //default config status
+    if(str_url.isNull() || str_url.isEmpty())
+    {
+        str_url = "http://fanyi.youdao.com/";
+    }
+    QDesktopServices::openUrl(QUrl(str_url));
+}
+void LoginUi::on_btn_edit_pwd_clicked()
+{
+
+}
