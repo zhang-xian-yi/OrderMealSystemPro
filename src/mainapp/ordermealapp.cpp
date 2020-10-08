@@ -1,8 +1,8 @@
 ﻿#include "ordermealapp.h"
 
-#include <QPixmap>
-#include <QSplashScreen>
 #include <QTime>
+#include <QMovie>
+#include <QMessageBox>
 OrderMealApp::OrderMealApp()
 {
    initApp();
@@ -34,16 +34,27 @@ void OrderMealApp::initApp()
 
 }
 
+void OrderMealApp::recv_login_info(const QString& msg)
+{
+    if("success" == msg)
+    {
+        this->m_login->close();
+        this->m_tray_icon->close();
+    }
+    else
+    {
+        QMessageBox::warning(nullptr,"登录信息警告",msg);
+    }
+}
+
 void OrderMealApp::startApp()
 {
     //程序启动的动画
-    /*
-    QPixmap pic(":/appfile/images/start/init.gif");
-    QSplashScreen splash(pic);
-    splash.show();
-    for(int i = 0;i<800000000;++i);
-    */
+
+
+    //gif_src.set
     m_login->show();
+
     //程序启动完成之后
-    //splash.finish(m_login);
+
 }

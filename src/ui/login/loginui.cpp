@@ -25,7 +25,7 @@ LoginUi::LoginUi(QWidget *parent) :
 
     m_Drag = false;
     init();
-    connect(this,SIGNAL(close()),this,SLOT(close()));
+    connect(this,SIGNAL(close()),this,SLOT(closeWindows()));
 
     //设置最大窗口大小
     this->setMaximumSize(427,330);
@@ -39,6 +39,11 @@ LoginUi::LoginUi(QWidget *parent) :
 }
 
 LoginUi::~LoginUi()
+{
+    closeWindows();
+}
+
+void LoginUi::closeWindows()
 {
     if(nullptr != timer1)
     {
@@ -302,22 +307,32 @@ void LoginUi::on_cBox_account_currentIndexChanged(int index)
 
 
 
-
+#include <QDebug>
 void LoginUi::on_btn_login_clicked()
 {
-
+    QString username = ui->cBox_account->currentText();
+    QString passwd = ui->lineEdit_passwd->text();
+    qDebug()<<"username: "<<username<<"  passoword:  "<<passwd;
+    emit signalLogin(username,passwd);
 }
+
 void LoginUi::on_btn_regist_clicked()
 {
     QString str_url =ConfigHelperUtil::getInstance().getValue("LoginConfig","register_url");
     //default config status
     if(str_url.isNull() || str_url.isEmpty())
     {
-        str_url = "http://fanyi.youdao.com/";
+        str_url = "http://www.zhangxianyi4work.work/registered.html";
     }
     QDesktopServices::openUrl(QUrl(str_url));
 }
 void LoginUi::on_btn_edit_pwd_clicked()
 {
-
+    QString str_url =ConfigHelperUtil::getInstance().getValue("LoginConfig","register_url");
+    //default config status
+    if(str_url.isNull() || str_url.isEmpty())
+    {
+        str_url = "http://www.zhangxianyi4work.work/registered.html";
+    }
+    QDesktopServices::openUrl(QUrl(str_url));
 }

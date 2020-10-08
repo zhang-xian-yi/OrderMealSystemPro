@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../src/ui/servicer/servicer.qml</file>
+        <file>../../src/ui/qmlpublic/component/ZButton.qml</file>
+        <file>../../src/ui/qmlpublic/component/ZListViewDelegrate.qml</file>
+        <file>../../src/ui/qmlpublic/component/ZIconButton.qml</file>
+        <file>../../src/ui/qmlpublic/component/ZButtonStyle.qml</file>
+        <file>../../src/ui/qmlpublic/component/ZStyle.qml</file>
+        <file>../../src/ui/qmlpublic/component/ZUiGlobal.qml</file>
+        <file>../../src/ui/servicer/module/FoodListView.qml</file>
+        <file>../../src/ui/servicer/module/SlidesShow.qml</file>
+        <file>../../src/ui/servicer/module/FoodTabView.qml</file>
+    </qresource>
+</RCC>

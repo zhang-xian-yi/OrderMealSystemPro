@@ -88,8 +88,10 @@ void SystemTrayIcon::createTrayIcon()
 
 void SystemTrayIcon::slot_app_exit()
 {
-    pWidget->close();
+    //关闭系统托盘按钮
     this->close();
+    //父控件释放的时候 会逐级释放子空间
+    pWidget->close();
 }
 
 void SystemTrayIcon::slot_iconActivated(QSystemTrayIcon::ActivationReason reason)

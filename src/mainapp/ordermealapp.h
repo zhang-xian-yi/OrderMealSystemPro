@@ -16,6 +16,9 @@ public:
     OrderMealApp();
     ~OrderMealApp();
     void startApp();
+public:
+    //response the SysServiceControl signal slot
+    void recv_login_info(const QString& msg);
 private:
     void initApp();
 

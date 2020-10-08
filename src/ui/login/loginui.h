@@ -21,6 +21,7 @@ public:
     ~LoginUi();
 
     void init();
+    void closeWindows();
 private:
     //UI界面设置  去边框，最小化，最大化button
     void configWindow();
@@ -37,7 +38,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
 signals:
-    void close();
+    void signalLogin(const QString& name,const QString& passwd);
 private slots:
 
     void slot_timer1();
