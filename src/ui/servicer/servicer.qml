@@ -2,14 +2,11 @@
 import QtQuick.Window 2.3
 import "./module/"
 
-
-Window{
+Rectangle{
     id:root;
     color: "gray";
-    visible: true;
     width: 640;
     height: 480;
-
 
     SlidesShow{
         id:seat_num_bg;

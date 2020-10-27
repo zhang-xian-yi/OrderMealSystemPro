@@ -1,8 +1,8 @@
-#include "encryputil.h"
+﻿#include "encryputil.h"
 #include "global.h"
 #include <QFile>
 #include <QChar>
-
+#include <QTextStream>
 
 #if _MSC_VER >= 1600
 #pragma execution_character_set("utf-8")
@@ -16,14 +16,14 @@ void EncrypUtil::encryptFile(const QString& filepath)
     if(file.open(QIODevice::ReadWrite))
     {
         str = in.readAll();
-        TRACE("read in file %s\n",str.toStdString().c_str());
+        DEBUG_UTIL("read in file %s\n",str.toStdString().c_str());
 
         int len = str.length();
         for(int i=0;i<len;++i)
         {
             str[i] = QChar::fromLatin1(str[i].toLatin1() - 1);
         }
-        TRACE("write in file %s\n",str.toStdString().c_str());
+        DEBUG_UTIL("write in file %s\n",str.toStdString().c_str());
     }
     file.close();
 
@@ -43,7 +43,7 @@ void EncrypUtil::decryptFile(const QString& filepath)
     if(file.open(QIODevice::ReadOnly))
     {
         str = fin.readAll();
-        qDebug() << str;
+        DEBUG_UTIL("%s",str.toStdString().c_str());
         int len = str.length();
         for(int i=0;i<len;++i)
         {

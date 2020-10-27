@@ -23,11 +23,11 @@ void ConfigHelperUtil::initSetting(const QString &path)
     QString fileName;
     fileName = QCoreApplication::applicationDirPath();
     fileName += path;
-    TRACE("file name: %s",fileName.toLatin1().data());
+    DEBUG_UTIL("file name: %s",fileName.toLatin1().data());
     QFile file(path);
     if(file.exists())
     {
-        TRACE("file exist");
+        DEBUG_UTIL("file exist");
         m_ini_file = QSharedPointer<QSettings>(new QSettings(path, QSettings::IniFormat));
         //Make sure Chinese can be used
         m_ini_file->setIniCodec(QTextCodec::codecForName("System"));

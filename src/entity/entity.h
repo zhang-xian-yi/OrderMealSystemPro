@@ -9,11 +9,18 @@
 class Entity
 {
 public:
+    explicit Entity();
     Entity(QVariantList data);
 
     QVariantList data() const;
-    void setData(const QVariantList &data);
+    void setData(const QVariantList data);
+    void setData(const QStringList data);
+    void clear();
+    bool empty()const;
+    //用于获取该数据 无法修改
     const QVariant at(int i) const;
+    QByteArray toString()const;
+    //用户修改该数据
     QVariant& operator[] (int i);
 private:
     QVariantList _data;

@@ -4,7 +4,7 @@ Item {
     id:shuffing;
 
     property double opacity_bg: 0.9;
-    property int timer_intervel: 4000;
+    property int timer_intervel: 6000;
     property bool is_top: false;
 
     Rectangle{

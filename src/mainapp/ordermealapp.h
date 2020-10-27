@@ -2,10 +2,11 @@
 #define ORDERMEALAPP_H
 
 #include <QObject>
-
-
+#include <QLibrary>
+#include <QApplication>
 #include "loginui.h"
 #include "systemtrayicon.h"
+#include "sysservicecontrol.h"
 
 
 class OrderMealApp:public QObject
@@ -13,18 +14,24 @@ class OrderMealApp:public QObject
     Q_OBJECT
 
 public:
-    OrderMealApp();
+    explicit OrderMealApp();
     ~OrderMealApp();
+public slots:
     void startApp();
-public:
+    void slot_stopApp(const int& type);
     //response the SysServiceControl signal slot
-    void recv_login_info(const QString& msg);
-private:
-    void initApp();
+    void slot_recv_login_info(const int cmd);
+public:
 
 private:
-     LoginUi* m_login;
-     SystemTrayIcon* m_tray_icon;
+    bool initApp();
+    bool initConnect();
+    bool stopApp();
+private:
+     LoginUi* m_login = nullptr;
+     SystemTrayIcon* m_tray_icon = nullptr;
+     SysServiceControl* m_control = nullptr;
+     bool m_run = false;
 };
 
 #endif // ORDERMEALAPP_H

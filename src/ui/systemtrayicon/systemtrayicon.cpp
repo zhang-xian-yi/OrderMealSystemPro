@@ -1,7 +1,6 @@
 ﻿#include "systemtrayicon.h"
-
+#include "entityenumindex.h"
 #include <QApplication>
-#include <QDebug>
 
 #pragma execution_character_set("utf-8")
 
@@ -43,11 +42,6 @@ SystemTrayIcon::~SystemTrayIcon()
         delete menu;
         menu = nullptr;
     }
-    if(nullptr != pWidget )
-    {
-        delete pWidget;
-        pWidget = nullptr;
-    }
 }
 
 void SystemTrayIcon::createAct()
@@ -88,10 +82,7 @@ void SystemTrayIcon::createTrayIcon()
 
 void SystemTrayIcon::slot_app_exit()
 {
-    //关闭系统托盘按钮
-    this->close();
-    //父控件释放的时候 会逐级释放子空间
-    pWidget->close();
+    emit signal_stopApp(NORMAL_EXIT_APP);
 }
 
 void SystemTrayIcon::slot_iconActivated(QSystemTrayIcon::ActivationReason reason)

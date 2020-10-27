@@ -20,6 +20,7 @@ public:
 
 signals:
     void signal_showWin();          //显示窗口
+    void signal_stopApp(const int& type);
 public slots:
     void slot_iconActivated(QSystemTrayIcon::ActivationReason reason);
     void slot_app_exit();

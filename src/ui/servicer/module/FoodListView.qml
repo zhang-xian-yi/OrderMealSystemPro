@@ -10,6 +10,12 @@ Item{
 
     property string type_name: null;
 
+    function initListView()
+    {
+
+    }
+
+
     ListView {
         id: listView
         anchors.fill: parent;
@@ -33,7 +39,7 @@ Item{
 
                 Image {
                     id: img;
-                    source: img_url;
+                    source: food_img;
                     anchors.fill: parent;
                     asynchronous: true;
                     fillMode: Image.PreserveAspectFit;
@@ -46,8 +52,8 @@ Item{
             }
 
             Text {
-                id:foot_name_txt;
-                text: food_name;
+                id:food_name_id;
+                text: food_name_txt;
                 anchors.top: parent.top;
                 anchors.topMargin: 16;
                 anchors.left:img_rect.right;
@@ -55,7 +61,7 @@ Item{
             }
 
             Text {
-                text: food_price;
+                text: food_price_txt;
                 anchors.left: img_rect.right;
                 anchors.leftMargin: 16;
                 anchors.bottom: parent.bottom;
@@ -63,9 +69,9 @@ Item{
             }
 
             Text {
-                text: food_desc;
+                text: food_desc_txt;
                 anchors.verticalCenter:  parent.verticalCenter;
-                anchors.left: foot_name_txt.right;
+                anchors.left: food_name_id.right;
                 anchors.leftMargin: 10;
                 color: listView.currentIndex == index ? "red" : ""
             }
@@ -84,14 +90,16 @@ Item{
 
     }
 
+
+
     ListModel{
         id:testModel;
     }
 
     Component.onCompleted: {
         // test data
-        for (var i=0; i<20; ++i) {
-            testModel.append({"food_name": "鱼香肉丝", "food_price": i *10,"food_desc":"利用。。。。。。","img_url":"http://www.zhangxianyi4work.work:8088/she/1.jpeg"})
+        for (var i=0; i<5; ++i) {
+            testModel.append({"food_name_txt": "鱼香肉丝", "food_price_txt": i *10,"food_desc_txt":"利用。。。。。。","food_img":"http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg"})
         }
     }
 

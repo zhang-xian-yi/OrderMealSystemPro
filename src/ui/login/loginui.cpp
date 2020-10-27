@@ -3,20 +3,12 @@
 
 #include <QTime>
 #include <QDesktopServices>
+#include "global.h"
 #include "confighelperutil.h"
+#include "entityenumindex.h"
 
 #pragma execution_character_set("utf-8")
 
-//全局变量--静态 QStringlist
-static QStringList user_pass_list;
-//声明用户信息的类
-class UserInfo{
-public:
-    QString userName;
-    QString passwd;
-    //身份
-    QString identity;
-};
 LoginUi::LoginUi(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LoginUi)
@@ -25,7 +17,7 @@ LoginUi::LoginUi(QWidget *parent) :
 
     m_Drag = false;
     init();
-    connect(this,SIGNAL(close()),this,SLOT(closeWindows()));
+
 
     //设置最大窗口大小
     this->setMaximumSize(427,330);
@@ -41,33 +33,45 @@ LoginUi::LoginUi(QWidget *parent) :
 LoginUi::~LoginUi()
 {
     closeWindows();
+
 }
 
 void LoginUi::closeWindows()
 {
     if(nullptr != timer1)
     {
+        timer1->stop();
         delete timer1;
+        timer1 = nullptr;
     }
     if(nullptr != timer2)
     {
+        timer2->stop();
         delete timer2;
+        timer2 = nullptr;
     }
     //btn response
     if(nullptr != minBtn)
     {
         delete minBtn;
+        minBtn = nullptr;
     }
     if(nullptr != closeBtn)
     {
         delete closeBtn;
+        closeBtn = nullptr;
     }
     if(nullptr != setBtn)
     {
         delete setBtn;
+        setBtn = nullptr;
     }
 
-    delete ui;
+    if(nullptr != ui)
+    {
+        delete ui;
+        ui = nullptr;
+    }
 }
 
 
@@ -92,7 +96,9 @@ void LoginUi::init()
 
 void LoginUi::init_connect_func()
 {
-    connect(ui->cBox_account,SIGNAL(clicked()),this,SLOT(on_cBox_account_activated()));
+    //connect(ui->cBox_account,SIGNAL(clicked()),this,SLOT(on_cBox_account_activated(int)));
+    connect(ui->btn_login,SIGNAL(clicked()),this,SLOT(on_btn_login_clicked()));
+    connect(this,SIGNAL(destroyed(QObject *)),this,SLOT(closeWindows( )));
 }
 
 void LoginUi::configWindow()
@@ -245,8 +251,9 @@ void LoginUi::slot_setLanguage()
 //关闭程序 应该放在app 中进行调用
 void LoginUi::slot_closeWindow()
 {
-    this->close();
     timer2->start(3);
+    closeWindows();
+    emit signal_stopApp(NORMAL_EXIT_APP);
 }
 
 void LoginUi::slot_trayIcon()
@@ -284,12 +291,6 @@ void LoginUi::slot_timer2()
 }
 
 
-void LoginUi::on_cBox_account_activated(int index)
-{
-    ui->lineEdit_passwd->setText(user_pass_list.at(index));
-    on_cBox_account_currentIndexChanged(index);
-}
-
 
 //下拉框选里面的项时，会切换top_img的图片和头像图片
 void LoginUi::on_cBox_account_currentIndexChanged(int index)
@@ -305,14 +306,11 @@ void LoginUi::on_cBox_account_currentIndexChanged(int index)
    set_user_img(true,index);
 }
 
-
-
-#include <QDebug>
 void LoginUi::on_btn_login_clicked()
 {
     QString username = ui->cBox_account->currentText();
     QString passwd = ui->lineEdit_passwd->text();
-    qDebug()<<"username: "<<username<<"  passoword:  "<<passwd;
+    DEBUG_UI("username:%s,password:%s,",username.toStdString().c_str(),passwd.toStdString().c_str());
     emit signalLogin(username,passwd);
 }
 
@@ -328,11 +326,13 @@ void LoginUi::on_btn_regist_clicked()
 }
 void LoginUi::on_btn_edit_pwd_clicked()
 {
-    QString str_url =ConfigHelperUtil::getInstance().getValue("LoginConfig","register_url");
+    QString str_url =ConfigHelperUtil::getInstance().getValue("LoginConfig","login_url");
     //default config status
     if(str_url.isNull() || str_url.isEmpty())
     {
-        str_url = "http://www.zhangxianyi4work.work/registered.html";
+        str_url = "http://www.zhangxianyi4work.work/login.html";
     }
     QDesktopServices::openUrl(QUrl(str_url));
 }
+
+

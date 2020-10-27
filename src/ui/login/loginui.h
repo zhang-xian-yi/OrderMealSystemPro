@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QActionGroup>
+#include <QObject>
 
 namespace Ui {
 class LoginUi;
@@ -21,6 +22,7 @@ public:
     ~LoginUi();
 
     void init();
+public slots:
     void closeWindows();
 private:
     //UI界面设置  去边框，最小化，最大化button
@@ -38,7 +40,8 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
 signals:
-    void signalLogin(const QString& name,const QString& passwd);
+    void signal_stopApp(const int& type);
+    void signalLogin(const QString name,const QString passwd);
 private slots:
 
     void slot_timer1();
@@ -52,7 +55,7 @@ private slots:
     void on_btn_login_clicked();
     void on_btn_regist_clicked();
     void on_btn_edit_pwd_clicked();
-    void on_cBox_account_activated(int index);
+
     void on_cBox_account_currentIndexChanged(int index);
 private:
     Ui::LoginUi *ui;

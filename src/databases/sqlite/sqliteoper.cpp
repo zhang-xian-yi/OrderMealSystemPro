@@ -9,9 +9,8 @@
 #pragma execution_character_set("utf-8")
 #endif
 
-SQLiteOper::SQLiteOper()
+void SQLiteOper::initSQLCOnfig()
 {
-
     if(QSqlDatabase::contains("qt_sql_default_connection"))
     {
         m_sqlite_db = QSqlDatabase::database("qt_sql_default_connection");
@@ -36,12 +35,17 @@ SQLiteOper::SQLiteOper()
     //尝试打开该数据库文件
     if ( ! m_sqlite_db.open() )
     {
-        TRACE("Error: Failed to connect database. %s\n",m_sqlite_db.lastError().text().toLatin1().toStdString().c_str());
+        DEBUG_SQLITE("Error: Failed to connect database. %s\n",m_sqlite_db.lastError().text().toLatin1().toStdString().c_str());
     }
 }
 
 
-bool SQLiteOper::createTable(SQLiteTable & table)
+SQLiteOper::SQLiteOper()
+{
+    initSQLCOnfig();
+}
+
+bool SQLiteOper::createTable(const SQLiteTable & table)
 {
     //QString sql = "create table student(id int primary key, name text, age int)";
     //构建创建表格的字符串
@@ -60,28 +64,70 @@ bool SQLiteOper::createTable(SQLiteTable & table)
         sql += " " + table.key_type.at(i);
     }
     sql += ");";
-    TRACE("createTable fun sql = %s\n",sql.toStdString().c_str());
+    DEBUG_SQLITE("createTable fun sql = %s\n",sql.toStdString().c_str());
 
-    return execSQL(sql);
+    return executeSQL(sql);
 }
 
-bool SQLiteOper::execSQL(const QString& sql)
+bool SQLiteOper::executeSQL(const QString& sql)
 {
     //创建表格
     static QSqlQuery sql_query;
     if(! sql_query.exec(sql))
     {
-        TRACE("Error: Fail to exec sql .%s \n",sql_query.lastError().text().toStdString().c_str());
+        DEBUG_SQLITE("Error: Fail to exec sql .%s \n",sql_query.lastError().text().toStdString().c_str());
         return false;
     }
     else
     {
-        TRACE("sql exec succ!\n");
+        DEBUG_SQLITE("sql exec succ!\n");
         return true;
     }
 }
 
-bool SQLiteOper::insertRecord(QString table_name, QVector<QString> values)
+Entity SQLiteOper::executeSQL(const QString& sql,const int& record_col_length)
+{
+    static QSqlQuery querySet;
+    querySet.exec(sql);
+    QVariantList record;
+    while(querySet.next())
+    {
+        for(int i = 0;i<record_col_length;++i)
+        {
+            record<<querySet.value(i);
+        }
+    }
+    return Entity(record);
+}
+
+bool SQLiteOper::executeSQL(const QString &sql, QList<Entity> &data)
+{
+    static QSqlQuery querySet;
+    querySet.exec(sql);
+
+    while(querySet.next())
+    {
+        Entity record(QVariantList() << querySet.value(Name_index)
+                                    << querySet.value(Price_index)
+                                    << querySet.value(Desc_index)
+                                    << querySet.value(ImgUrl_index)
+                                    << querySet.value(Type_index));
+        data.push_back(record);
+    }
+    if(! data.empty())
+    {
+        //查询的数据不为空
+        DEBUG_SQLITE("sqlite sql-查询数据成功\n");
+        return true;
+    }
+    else
+    {
+        DEBUG_SQLITE("sqlite-sql-数据集合为空");
+        return false;
+    }
+}
+
+bool SQLiteOper::insertRecord(const QString& table_name, const QVector<QString>& values)
 {
     //"INSERT INTO student VALUES(1, \"Wang\", 23)"
     QString sql = "insert into "+table_name+" values(";
@@ -93,16 +139,40 @@ bool SQLiteOper::insertRecord(QString table_name, QVector<QString> values)
         sql += "'"+values.at(i)+"'";
     }
     sql += ");";
-    TRACE("insertRecord fun :sql = %s\n",sql.toStdString().c_str());
-    return execSQL(sql);
+    DEBUG_SQLITE("insertRecord fun :sql = %s\n",sql.toStdString().c_str());
+    return executeSQL(sql);
 }
 
-bool SQLiteOper::deketeRecord(QString table_name, QString p_key,QString uuid)
+bool SQLiteOper::deketeRecord( const QString& table_name, const QString& p_key,const QString& uuid)
 {
     //delete from student where id = 1
     QString sql = "delete from "+table_name+" where "+p_key;
     //id  删除  不能符合所有的删除操作 也许可传入参数 表征传入的字段名
     sql += "= '"+uuid+"'"+";";
-    TRACE("deleteRecord fun :sql = %s\n",sql.toStdString().c_str());
-    return execSQL(sql);
+    DEBUG_SQLITE("deleteRecord fun :sql = %s\n",sql.toStdString().c_str());
+    return executeSQL(sql);
+}
+
+QList<Entity> SQLiteOper::getFoodRecoreds(const QString& p_key,const QString& value)
+{
+    static QList<Entity> dataList;
+    //清空存储的数据
+    dataList.clear();
+    QString sql = "select name,price,describe,imgurl from db_food_menu where "+p_key;
+    //id  删除  不能符合所有的删除操作 也许可传入参数 表征传入的字段名
+    sql += "= '"+value+"'"+";";
+    DEBUG_SQLITE("get records fun :sql = %s\n",sql.toStdString().c_str());
+    executeSQL(sql,dataList);
+    return dataList;
+}
+
+Entity SQLiteOper::getRecord(const QString& table_name,const QString& p_key,const QString& value)
+{
+    static Entity entity;
+    QString sql = "select * from "+table_name+" where "+p_key;
+    //通过某个可以唯一确定的id 来获取一个对象
+    sql += "= '"+value+"'"+";";
+    DEBUG_SQLITE("get records fun :sql = %s\n",sql.toStdString().c_str());
+
+    return executeSQL(sql,5);
 }

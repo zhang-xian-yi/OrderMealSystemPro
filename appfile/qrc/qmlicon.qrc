@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>../images/qmlicons/drink.png</file>
-        <file>../images/qmlicons/meat.png</file>
-        <file>../images/qmlicons/noodles.png</file>
-        <file>../images/qmlicons/soup.png</file>
-        <file>../images/qmlicons/vegetable.png</file>
-    </qresource>
-</RCC>

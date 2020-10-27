@@ -37,6 +37,7 @@ Item{
                 order_meal_view.currentIndex=(order_meal_view.count-1)//当前选中项
                 content.item.type_name = "drink";
 
+
                 content = order_meal_view.addTab("肉食",listview_component);
                 order_meal_view.currentIndex=(order_meal_view.count-1)//当前选中项
                 content.item.type_name = "meat";
@@ -100,9 +101,9 @@ Item{
                             id:tab_image;
                             width: 48;
                             height: 48;
-                            anchors.left: parent.left;
-                            anchors.top: parent.top;
-                            anchors.bottom: parent.bottom;
+                            Layout.alignment: Qt.AlignLeft;
+                            //Layout.alignment: Qt.AlignTop;
+                            //Layout.alignment: Qt.AlignBottom;
 
                             fillMode: Image.PreserveAspectFit;
                             asynchronous: true;
