@@ -9,8 +9,7 @@
         <file>src/ui/qmlpublic/component/ZUiGlobal.qml</file>
         <file>src/ui/servicer/module/FoodListView.qml</file>
         <file>src/ui/servicer/module/SlidesShow.qml</file>
-        <file>src/ui/servicer/module/FoodTabView.qml</file>
-		<!-- icon -->
+        <file>src/ui/qmlpublic/component/ZBaseTabBar.qml</file>
         <file>appfile/images/qmlicons/drink.png</file>
         <file>appfile/images/qmlicons/meat.png</file>
         <file>appfile/images/qmlicons/noodles.png</file>

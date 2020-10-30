@@ -1,7 +1,7 @@
 ﻿#ifndef QMLSERVICE_H
 #define QMLSERVICE_H
 #include <QObject>
-#include <QQuickView>
+#include <QQmlApplicationEngine>
 #include <QAbstractListModel>
 #include "qml_connect/qmlconnecter.h"
 #include "qml_model/modelfactory.h"
@@ -22,7 +22,7 @@ private:
     bool init5TypeData();
 private:
     /*quick view 加载界面 ui 的view*/
-    QQuickView* m_qml_view = nullptr;
+    QQmlApplicationEngine * m_qml_engine = nullptr;
     /*链接对象*/
     QMLCmdConnecter* m_cmd_connect = nullptr;
     QList<QAbstractListModel*> m_model_list;

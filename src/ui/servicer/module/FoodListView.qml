@@ -8,7 +8,7 @@ Item{
     implicitWidth:  360;
     implicitHeight: 360;
 
-    property string model_name: null;
+    property alias model_name: listView.model;
     ListView {
         id: listView
         anchors.fill: parent;
@@ -122,42 +122,9 @@ Item{
     function initDataModel(model_name)
     {
         //预先data
-        /*
         for (var i=0; i<5; ++i) {
             dataModel.append({"food_name_txt": "鱼香肉丝", "food_price_txt": i *10,"food_desc_txt":"利用。。。。。。","food_img":"http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg"})
         }
-        */
-
-
-        var condition = true;
-        do
-        {
-            if(null != model_name)
-            {
-                if(model_name === "drink_model")
-                {
-                    listView.model = drink_model;
-                }
-                else if(model_name === "meat_model")
-                {
-                    listView.model = meat_model;
-                }
-                else if(model_name === "noodles_model")
-                {
-                    listView.model = noodles_model;
-                }
-                else if(model_name === "soup_model")
-                {
-                    listView.model = soup_model;
-                }
-                else if(model_name === "vegetable_model")
-                {
-                    listView.model = vegetable_model;
-                }
-
-                condition = false;
-            }
-        }while(condition);
     }
 
     Component.onCompleted: {

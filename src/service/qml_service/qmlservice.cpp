@@ -30,11 +30,11 @@ QMLService::~QMLService()
         delete m_cmd_connect;
         m_cmd_connect = nullptr;
     }
-    if(nullptr != m_qml_view)
+    if(nullptr != m_qml_engine)
     {
-        m_qml_view->setSource(QUrl(""));
-        delete m_qml_view;
-        m_qml_view = nullptr;
+        m_qml_engine->load(QUrl(""));
+        delete m_qml_engine;
+        m_qml_engine = nullptr;
     }
 }
 
@@ -46,14 +46,14 @@ bool QMLService::initQMLUI()
     init5TypeData();
     /*注册对象必须放在初始化 QML 上下文环境之前 */
     m_cmd_connect = new QMLCmdConnecter();
-    m_qml_view = new QQuickView();
-    m_qml_view->engine()->rootContext()->setContextProperty("CmdConnecter",m_cmd_connect);
+    m_qml_engine = new QQmlApplicationEngine();
+    m_qml_engine->rootContext()->setContextProperty("CmdConnecter",m_cmd_connect);
 
     //注册 数据对象到qml 全局环境
     QList<QString> str_list = ConfigHelperUtil::getInstance().getValue("QMLConfig","food_model").split(',');
     for(int i = 0;i<m_model_list.length();++i)
     {
-        m_qml_view->engine()->rootContext()->setContextProperty(str_list[i],dynamic_cast<ServicerListviewModel*>(m_model_list.at(i)) );
+        m_qml_engine->rootContext()->setContextProperty(str_list[i],dynamic_cast<ServicerListviewModel*>(m_model_list.at(i)) );
     }
 
     return true;
@@ -81,13 +81,14 @@ bool QMLService::init5TypeData()
 
 bool QMLService::initServicerContext()
 {
-    /*不在事件循环中 必须通过view 加载*/
-    m_qml_view->setResizeMode(QQuickView::SizeRootObjectToView);
-    m_qml_view->setSource(QUrl("qrc:/src/ui/servicer/servicer.qml"));
-    if(nullptr == m_qml_view->rootObject())
+    m_qml_engine->load(QStringLiteral("qrc:/src/ui/servicer/servicer.qml"));
+    if(! m_qml_engine->rootObjects().empty())
     {
-        return false;
+        return true;
     }
-    m_qml_view->show();
-    return true;
+    else
+    {
+         return false;
+    }
+
 }
