@@ -22,9 +22,9 @@ ApplicationWindow{
     property var food_list: [];
 
     header: ZBaseTabBar{
-        id: bar
+        id: bar;
         height: 48;
-        width: parent.width
+        width: parent.width;
         Component.onCompleted: {
             tabBarModel.append({ "modelText": "酒水", "modelColor": "#000000", "modelColorG": "#148014", "modelSrc": icons[0], "modelSrcG": icons[0]})
             tabBarModel.append({ "modelText": "肉食", "modelColor": "#000000", "modelColorG": "#148014", "modelSrc": icons[1], "modelSrcG": icons[1]})
@@ -35,7 +35,7 @@ ApplicationWindow{
     }
 
     SwipeView {
-        id: swupe_view;
+        id: swipe_view;
         height: frmWindow.height - bar.height - seat_num_bg.height;
         width: parent.width;
         currentIndex: bar.currentIndex;
@@ -65,7 +65,6 @@ ApplicationWindow{
             id:vagetable_list_view;
             model_name: vegetable_model;
         }
-
     }
 
     footer:SlidesShow{

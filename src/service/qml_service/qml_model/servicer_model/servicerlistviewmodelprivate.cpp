@@ -36,17 +36,17 @@ QVariant ServicerListviewModelPrivate::data(const QModelIndex &index, int role )
     QVariant ret;
     switch (role)
     {
-        case FoodName:
-            ret = m_contexts.at(index.row()).at(Name_index);
+        case ServicerModelSpace::FoodName:
+            ret = m_contexts.at(index.row()).at(ServicerModelSpace::Name_index);
             break;
-        case FoodPrice:
-            ret = m_contexts.at(index.row()).at(Price_index);
+        case ServicerModelSpace::FoodPrice:
+            ret = m_contexts.at(index.row()).at(ServicerModelSpace::Price_index);
             break;
-        case FoodDesc:
-            ret = m_contexts.at(index.row()).at(Desc_index);
+        case ServicerModelSpace::FoodDesc:
+            ret = m_contexts.at(index.row()).at(ServicerModelSpace::Desc_index);
             break;
-        case FoodImgUrl:
-            ret = m_contexts.at(index.row()).at(ImgUrl_index);
+        case ServicerModelSpace::FoodImgUrl:
+            ret = m_contexts.at(index.row()).at(ServicerModelSpace::ImgUrl_index);
             break;
         default:
             break;
@@ -66,32 +66,15 @@ QHash<int, QByteArray> ServicerListviewModelPrivate::roleNames() const
     static QHash<int, QByteArray> roles;
     if(! flag)
     {
-        roles.insert(FoodName, "food_name_txt");
-        roles.insert(FoodPrice, "food_price_txt");
-        roles.insert(FoodDesc, "food_desc_txt");
-        roles.insert(FoodImgUrl,"food_img");
+        roles.insert(ServicerModelSpace::FoodName, "food_name_txt");
+        roles.insert(ServicerModelSpace::FoodPrice, "food_price_txt");
+        roles.insert(ServicerModelSpace::FoodDesc, "food_desc_txt");
+        roles.insert(ServicerModelSpace::FoodImgUrl,"food_img");
+        flag = true;
     }
     return roles;
 }
 
-bool ServicerListviewModelPrivate::setData(const QModelIndex &index, const QVariant &value, int role)
-{
-    if (data(index, role) != value)
-    {
-        // FIXME: Implement me!
-        m_contexts[index.row()][role] = value;
-        return true;
-    }
-    return false;
-}
-Qt::ItemFlags ServicerListviewModelPrivate::flags(const QModelIndex &index) const
-{
-    if (!index.isValid())
-    {
-        return Qt::NoItemFlags;
-    }
-    return Qt::ItemIsEditable; // FIXME: Implement me!
-}
 
 int ServicerListviewModelPrivate::rowCount(const QModelIndex &parent) const
 {

@@ -1,11 +1,13 @@
 ﻿#include "servicerlistviewmodel.h"
 #include "servicerlistviewmodelprivate.h"
 #include "global.h"
+#include <QThread>
 
 ServicerListviewModel::ServicerListviewModel(QObject *parent):
     QAbstractListModel(parent),
     m_service(new ServicerListviewModelPrivate)
 {
+
     //初始化数据
     m_service->getDataFromMysql();
 }
@@ -38,30 +40,9 @@ QVariant ServicerListviewModel::data(const QModelIndex &index, int role) const
     return m_service->data(index,role);
 }
 
-bool ServicerListviewModel::setData(const QModelIndex &index, const QVariant &value, int role)
+QHash<int, QByteArray> ServicerListviewModel::roleNames() const
 {
-    if(m_service->setData(index,value,role))
-    {
-         emit dataChanged(index,index);
-         return true;
-    }
-    return false;
-}
-
-Qt::ItemFlags ServicerListviewModel::flags(const QModelIndex &index) const
-{
-    return m_service->flags(index);
-}
-
-
-void ServicerListviewModel::writeData(const QString& data)
-{
-    DEBUG_SERVICE("%s",data.toStdString().c_str());
-}
-
-void ServicerListviewModel::updateData()
-{
-
+    return m_service->roleNames();
 }
 
 

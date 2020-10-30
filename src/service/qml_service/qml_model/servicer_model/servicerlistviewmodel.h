@@ -15,13 +15,9 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     /*获取所对应的txt 的数据*/
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    // Editable:
-    bool setData(const QModelIndex &index, const QVariant &value,int role = Qt::EditRole) override;
-    Qt::ItemFlags flags(const QModelIndex& index) const override;
-signals:
-    void writeData(const QString& data);
-private slots:
-    void updateData();
+
+protected:
+    QHash<int, QByteArray> roleNames() const override;
 private:
     ServicerListviewModelPrivate* m_service;
     QString name_id;
