@@ -1,13 +1,13 @@
 ﻿#include "loginui.h"
 #include "ui_loginui.h"
-
+#include <QThread>
 #include <QTime>
 #include <QDesktopServices>
 #include "global.h"
 #include "confighelperutil.h"
-#include "entityenumindex.h"
+#include "publicenum.h"
 
-#pragma execution_character_set("utf-8")
+
 
 LoginUi::LoginUi(QWidget *parent) :
     QWidget(parent),
@@ -33,7 +33,11 @@ LoginUi::LoginUi(QWidget *parent) :
 LoginUi::~LoginUi()
 {
     closeWindows();
-
+    if(nullptr != ui)
+    {
+        delete ui;
+        ui = nullptr;
+    }
 }
 
 void LoginUi::closeWindows()
@@ -65,12 +69,6 @@ void LoginUi::closeWindows()
     {
         delete setBtn;
         setBtn = nullptr;
-    }
-
-    if(nullptr != ui)
-    {
-        delete ui;
-        ui = nullptr;
     }
 }
 
@@ -253,7 +251,7 @@ void LoginUi::slot_closeWindow()
 {
     timer2->start(3);
     closeWindows();
-    emit signal_stopApp(NORMAL_EXIT_APP);
+    emit signal_stopApp(PublicType::NORMAL_EXIT_APP);
 }
 
 void LoginUi::slot_trayIcon()

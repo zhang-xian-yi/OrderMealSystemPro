@@ -1,7 +1,7 @@
 ﻿#include "mysqloper.h"
 #include "confighelperutil.h"
 #include "global.h"
-#include "entityenumindex.h"
+#include "publicenum.h"
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QFile>
@@ -60,11 +60,11 @@ Entity MySqlOper::getRecord(const QString &table_name, const QString &p_key, con
     switch (flag)
     {
         default:break;
-        case Employ_flag:
+        case PublicType::Employ_flag:
         {
             return getEmployerRecord(table_name,p_key,value);
         }
-        case Food_flag:
+        case PublicType::Food_flag:
         {
 
         }

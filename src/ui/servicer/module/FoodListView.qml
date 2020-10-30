@@ -1,6 +1,6 @@
-﻿import QtQuick 2.0
+﻿import QtQuick 2.7
+import QtQuick.Controls 2.4
 import "../../qmlpublic/component/"
-//import cn.qt.model 1.0
 
 Item{
     id:component_list_view
@@ -8,19 +8,11 @@ Item{
     implicitWidth:  360;
     implicitHeight: 360;
 
-    property string type_name: null;
-
-    function initListView()
-    {
-
-    }
-
-
+    property string model_name: null;
     ListView {
         id: listView
         anchors.fill: parent;
-        //model: ServicerListviewModel;
-        model: testModel;
+        model: dataModel;
         clip: true;
         highlightFollowsCurrentItem: true;
 
@@ -82,25 +74,94 @@ Item{
                 color: "gray"
                 anchors.bottom: parent.bottom
             }
+            Button{
+                text: "+";
+                width: 50;
+                height: 25;
+                background: Rectangle{
+                    anchors.fill: parent;
+                    color: "lightblue";
+                }
+
+                anchors.right: parent.right;
+                anchors.top: parent.top;
+                anchors.topMargin:  10;
+                onClicked: {
+                    //CmdConnecter.handleCmd();
+                }
+
+            }
+            Button{
+                text: "-";
+                width: 50;
+                height: 25;
+                background: Rectangle{
+                    anchors.fill: parent;
+                    color: "lightblue";
+                }
+                anchors.right: parent.right;
+                anchors.bottom: parent.bottom;
+                anchors.bottomMargin: 10;
+                onClicked: {
+
+                }
+            }
+
             onContentRectangleClicked: {
                 // TODO something
-                console.log("loader the type name is : "+component_list_view.type_name)
+                console.log("loader the type name is : "+component_list_view.model_name)
             }
         }
 
     }
 
-
-
     ListModel{
-        id:testModel;
+        id:dataModel;
+    }
+
+    function initDataModel(model_name)
+    {
+        //预先data
+        /*
+        for (var i=0; i<5; ++i) {
+            dataModel.append({"food_name_txt": "鱼香肉丝", "food_price_txt": i *10,"food_desc_txt":"利用。。。。。。","food_img":"http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg"})
+        }
+        */
+
+
+        var condition = true;
+        do
+        {
+            if(null != model_name)
+            {
+                if(model_name === "drink_model")
+                {
+                    listView.model = drink_model;
+                }
+                else if(model_name === "meat_model")
+                {
+                    listView.model = meat_model;
+                }
+                else if(model_name === "noodles_model")
+                {
+                    listView.model = noodles_model;
+                }
+                else if(model_name === "soup_model")
+                {
+                    listView.model = soup_model;
+                }
+                else if(model_name === "vegetable_model")
+                {
+                    listView.model = vegetable_model;
+                }
+
+                condition = false;
+            }
+        }while(condition);
     }
 
     Component.onCompleted: {
-        // test data
-        for (var i=0; i<5; ++i) {
-            testModel.append({"food_name_txt": "鱼香肉丝", "food_price_txt": i *10,"food_desc_txt":"利用。。。。。。","food_img":"http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg"})
-        }
+        initDataModel(model_name);
     }
 
 

@@ -25,15 +25,15 @@ public:
 public slots:
     void closeWindows();
 private:
-    //UI界面设置  去边框，最小化，最大化button
+    /*UI界面设置  去边框，最小化，最大化button*/
     void configWindow();
-    //isSandom is true,set img show by sandom
+    /*isSandom is true,set img show by sandom*/
     void set_top_img(bool isSandom, int index_img);
-    //设置UI上的按钮
+    /*设置UI上的按钮*/
     void set_button();
-    //设置UI上用户头像
+    /*设置UI上用户头像*/
     void set_user_img(bool isSandom, int index_img);
-    //初始化 connct 函数
+    /*初始化 connct 函数*/
     void init_connect_func();
 protected:
     void mousePressEvent(QMouseEvent *e);

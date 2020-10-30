@@ -2,9 +2,10 @@
 
 #include <QTime>
 #include <QMovie>
+#include <QThread>
 #include <QMessageBox>
 #include "confighelperutil.h"
-#include "entityenumindex.h"
+#include "publicenum.h"
 
 OrderMealApp::OrderMealApp()
 {
@@ -13,7 +14,8 @@ OrderMealApp::OrderMealApp()
 
 OrderMealApp::~OrderMealApp()
 {
-    slot_stopApp(NORMAL_EXIT_APP);
+    stopApp();
+    QThread::currentThread()->exit();
 }
 
 bool  OrderMealApp::initApp()
@@ -21,11 +23,10 @@ bool  OrderMealApp::initApp()
     bool ret = false;
     m_login = new LoginUi();
     m_control = new SysServiceControl();
-
     QStringList strList;
     strList << "点餐系统登陆" << "Login v1.0";
     QIcon icon(":/appfile/images/login/trayicon.ico");
-    m_tray_icon = new SystemTrayIcon(strList,icon,m_login);
+    m_tray_icon = new SystemTrayIcon(strList,icon,nullptr);
 
     ret = initConnect();
 
@@ -34,13 +35,13 @@ bool  OrderMealApp::initApp()
 
 void OrderMealApp::slot_recv_login_info(const int cmd)
 {
-    if(LOGIN_SUCC == cmd)
+    if(PublicType::LOGIN_SUCC == cmd)
     {
-        m_login->closeWindows();
+        m_tray_icon->setParentWidget(nullptr);
         delete m_login;
         m_login = nullptr;
     }
-    else if(LOGIN_FAILED == cmd)
+    else if(PublicType::LOGIN_FAILED == cmd)
     {
         QMessageBox::warning(m_login,"登录信息警告","密码或者名字/工号错误");
     }
@@ -77,12 +78,12 @@ void OrderMealApp::slot_stopApp(const int& type)
 {
     switch (type)
     {
-        case NORMAL_EXIT_APP:
+        case PublicType::NORMAL_EXIT_APP:
         {
             stopApp();
             break;
         }
-        case LOAD_UI_ERROR:
+        case PublicType::LOAD_UI_ERROR:
         {
             stopApp();
             break;
@@ -94,6 +95,12 @@ void OrderMealApp::slot_stopApp(const int& type)
 
 bool OrderMealApp::stopApp()
 {
+    m_run = false;
+    if(nullptr != m_control)
+    {
+        delete m_control;
+        m_control = nullptr;
+    }
     if(nullptr != m_tray_icon)
     {
         delete m_tray_icon;
@@ -104,11 +111,5 @@ bool OrderMealApp::stopApp()
         delete m_login;
         m_login = nullptr;
     }
-    if(nullptr != m_control)
-    {
-        delete m_control;
-        m_control = nullptr;
-    }
-    m_run = false;
     return true;
 }

@@ -1,39 +1,44 @@
 ﻿#include "sysservicecontrol.h"
 #include "global.h"
 
+
 SysServiceControl::SysServiceControl(QObject* parent):
     QObject(parent),
-    m_sql_service(new SQLService)
+    m_sql_service(new SQLService),
+    m_qml_service(new QMLService)
 {
     init();
 }
 
 SysServiceControl::~SysServiceControl()
 {
-    if(nullptr != m_qml_view)
-    {
-        delete m_qml_view;
-        m_qml_view = nullptr;
-    }
-
-    if(nullptr != m_sql_service)
-    {
-        delete  m_sql_service;
-        m_sql_service = nullptr;
-    }
+    this->closeService();
 }
 
 bool SysServiceControl::init()
 {
     bool ret = false;
-    ret = initServicerQMLUI();
+
     return ret;
 }
-
-bool SysServiceControl::initServicerQMLUI()
+/**
+* @brief:  关闭服务 并释放所有资源（析构时调用）
+* @param：
+* @return:
+* @date: 2020-10-29
+*/
+bool SysServiceControl::closeService()
 {
-    m_qml_view = new QQuickView();
-    m_ctx = m_qml_view->rootContext();
+    if(nullptr != m_qml_service)
+    {
+        delete m_qml_service;
+        m_qml_service = nullptr;
+    }
+    if(nullptr != m_sql_service)
+    {
+        delete  m_sql_service;
+        m_sql_service = nullptr;
+    }
     return true;
 }
 
@@ -48,34 +53,31 @@ void SysServiceControl::slot_dealLogin(const QString name,const QString passwd)
     int profess = -1;
     if(m_sql_service->checkEmployerInfo(name,passwd,&profess))
     {
-        emit signal_login_info(LOGIN_SUCC);
+        emit signal_login_info(PublicType::LOGIN_SUCC);
         switch (profess)
         {
             default:break;
-            case Sevicr:
+            case PublicType::Sevicr:
             {
-                //不在事件循环中 必须通过view 加载
-                m_qml_view->setSource(QUrl("qrc:/src/ui/servicer/servicer.qml"));
-                if(nullptr == m_qml_view->rootObject())
+                /*使用 servicer 的上下文 并展示*/
+                if (! m_qml_service->initServicerContext())
                 {
-                    emit signal_stopApp(LOAD_UI_ERROR);
-                    DEBUG_SERVICE("load service qml error");
-                    return;
+                    emit signal_stopApp(PublicType::LOAD_UI_ERROR);
+                    DEBUG_SERVICE("load servicer qml ui error");
                 }
-                m_qml_view->show();
                 break;
             }
-            case Cooker:
+            case PublicType::Cooker:
             {
 
                 break;
             }
-            case Counter:
+            case PublicType::Counter:
             {
 
                 break;
             }
-            case Manager:
+            case PublicType::Manager:
             {
 
                 break;
@@ -86,6 +88,6 @@ void SysServiceControl::slot_dealLogin(const QString name,const QString passwd)
     else
     {
         //DEBUG_SERVICE("login failed");
-        emit signal_login_info(LOGIN_FAILED);
+        emit signal_login_info(PublicType::LOGIN_FAILED);
     }
 }

@@ -2,8 +2,9 @@
 #define SYSSERVICECONTROL_H
 
 #include <QObject>
-#include <QQuickView>
-#include "sql_service/sqlservice.h"
+#include <QAbstractListModel>
+#include "sqlservice.h"
+#include "qmlservice.h"
 
 class SysServiceControl:public QObject
 {
@@ -11,6 +12,8 @@ class SysServiceControl:public QObject
 public:
     SysServiceControl(QObject* parent = nullptr);
     ~SysServiceControl();
+    /*关闭服务*/
+    bool closeService();
 signals:
     /*发出响应 登录ui 的信号 是否成功*/
     void signal_login_info(const int cmd);
@@ -22,11 +25,8 @@ private:
     /*初始化 服务/connect/UI*/
     bool init();
 private:
-    bool initServicerQMLUI();
-private:
     SQLService* m_sql_service = nullptr;
-    QQuickView* m_qml_view = nullptr;
-    QQmlContext *m_ctx = nullptr;
+    QMLService* m_qml_service = nullptr;
 };
 
 #endif // SYSSERVICECONTROL_H

@@ -1,5 +1,5 @@
 INCLUDEPATH += $$PWD/
 HEADERS +=\
     $$PWD/global.h \
-    $$PWD/entityenumindex.h
+    $$PWD/publicenum.h
 

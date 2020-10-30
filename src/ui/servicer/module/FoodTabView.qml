@@ -35,25 +35,23 @@ Item{
 
                 var  content = order_meal_view.addTab("酒水",listview_component);
                 order_meal_view.currentIndex=(order_meal_view.count-1)//当前选中项
-                content.item.type_name = "drink";
-
+                content.item.model_name = "drink_model";
 
                 content = order_meal_view.addTab("肉食",listview_component);
                 order_meal_view.currentIndex=(order_meal_view.count-1)//当前选中项
-                content.item.type_name = "meat";
+                content.item.model_name = "meat_model";
 
                 content = order_meal_view.addTab("面食",listview_component);
                 order_meal_view.currentIndex=(order_meal_view.count-1)//当前选中项
-                content.item.type_name = "noodles";
+                content.item.model_name = "noodles_model";
 
                 content = order_meal_view.addTab("汤类",listview_component);
                 order_meal_view.currentIndex=(order_meal_view.count-1)//当前选中项
-                content.item.type_name = "soup";
+                content.item.model_name = "soup_model";
 
                 content = order_meal_view.addTab("蔬菜",listview_component);
                 order_meal_view.currentIndex=(order_meal_view.count-1)//当前选中项
-                content.item.type_name = "vegetable";
-
+                content.item.model_name = "vegetable_model";
             }
         }
 
@@ -139,4 +137,5 @@ Item{
 
         }
     }
+
 }

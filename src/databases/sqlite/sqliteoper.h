@@ -6,7 +6,7 @@
 //声明创建数据库 或者表的数据结构
 #include "sqlglobal.h"
 #include "entity.h"
-#include "entityenumindex.h"
+#include "publicenum.h"
 
 class SQLiteOper
 {

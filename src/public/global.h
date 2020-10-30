@@ -10,9 +10,16 @@
 #define DEBUG_UI_TRACE
 */
 #define DEBUG_SERVICE_TRACE
-
 #define LOG
 
+
+#define DEBUG_CONNECT_TRACE
+#ifdef DEBUG_CONNECT_TRACE
+#include <stdio.h>
+#define DEBUG_CONNECT(format,...) printf("[File: " __FILE__ ", Line: %d]:" format "\n", __LINE__, ##__VA_ARGS__)
+#else
+#define DEBUG_CONNECT(format,...)
+#endif
 
 
 #ifdef DEBUG_DATABASE_TRACE

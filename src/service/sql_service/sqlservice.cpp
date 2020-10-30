@@ -2,7 +2,7 @@
 #include "confighelperutil.h"
 #include <QCryptographicHash>
 #include "global.h"
-#include "entityenumindex.h"
+#include "publicenum.h"
 
 
 SQLService::SQLService():
@@ -30,13 +30,13 @@ bool SQLService::checkEmployerInfo(const QString &uuid, const QString &password,
     QString table_name = ConfigHelperUtil::getInstance().getValue("MySqlConfig","table_user");
     QString table_primary = ConfigHelperUtil::getInstance().getValue("MySqlConfig","user_primary");
     //获取数据中存在的用户信息
-    Entity sql_user = m_mysql_dao->getRecord(table_name,table_primary,uuid,Employ_flag);
+    Entity sql_user = m_mysql_dao->getRecord(table_name,table_primary,uuid,PublicType::Employ_flag);
     //只要名字/工号匹配正确
-    if(sql_user.at(id_index) == uuid  || sql_user.at(name_index) == uuid)
+    if(sql_user.at(EntityIndex::id_index) == uuid  || sql_user.at(EntityIndex::name_index) == uuid)
     {
         //进行密码检查
         //QByteArray bapass = QCryptographicHash::hash(password.toUtf8(),QCryptographicHash::Md5);
-        if(password == sql_user.at(password_index))
+        if(password == sql_user.at(EntityIndex::password_index))
         {
             *out_profess = sql_user.at(1).toInt();
             return true;

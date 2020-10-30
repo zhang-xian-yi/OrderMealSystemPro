@@ -4,7 +4,7 @@
 
 #include <QSqlDatabase>
 #include "entity.h"
-#include "entityenumindex.h"
+#include "publicenum.h"
 
 class MySqlOper
 {

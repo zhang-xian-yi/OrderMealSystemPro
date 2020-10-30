@@ -10,9 +10,8 @@
         <file>src/ui/servicer/module/FoodListView.qml</file>
         <file>src/ui/servicer/module/SlidesShow.qml</file>
         <file>src/ui/servicer/module/FoodTabView.qml</file>
-		
-		<!--icon -->
-		<file>appfile/images/qmlicons/drink.png</file>
+		<!-- icon -->
+        <file>appfile/images/qmlicons/drink.png</file>
         <file>appfile/images/qmlicons/meat.png</file>
         <file>appfile/images/qmlicons/noodles.png</file>
         <file>appfile/images/qmlicons/soup.png</file>

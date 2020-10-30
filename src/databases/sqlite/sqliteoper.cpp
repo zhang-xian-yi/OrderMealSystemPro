@@ -107,11 +107,11 @@ bool SQLiteOper::executeSQL(const QString &sql, QList<Entity> &data)
 
     while(querySet.next())
     {
-        Entity record(QVariantList() << querySet.value(Name_index)
-                                    << querySet.value(Price_index)
-                                    << querySet.value(Desc_index)
-                                    << querySet.value(ImgUrl_index)
-                                    << querySet.value(Type_index));
+        Entity record(QVariantList() << querySet.value(EntityIndex::Name_index)
+                                    << querySet.value(EntityIndex::Price_index)
+                                    << querySet.value(EntityIndex::Desc_index)
+                                    << querySet.value(EntityIndex::ImgUrl_index)
+                                    << querySet.value(EntityIndex::Type_index));
         data.push_back(record);
     }
     if(! data.empty())
