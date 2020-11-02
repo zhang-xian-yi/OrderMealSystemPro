@@ -3,5 +3,3 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/sqlservice.cpp
-
-INCLUDEPATH += $$PWD/

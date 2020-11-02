@@ -4,12 +4,13 @@
 #include <QAbstractListModel>
 #include <QList>
 #include "entity.h"
+#include "mysql/mysqloper.h"
 
 namespace  ServicerModelSpace{
 enum ModelRoles {
     FoodName = Qt::UserRole + 1,
     FoodPrice,
-    FoodDesc,
+    FoodDetail,
     FoodImgUrl
 };
 

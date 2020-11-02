@@ -4,7 +4,7 @@
 #include <QTime>
 #include <QDesktopServices>
 #include "global.h"
-#include "confighelperutil.h"
+#include "confighelperutil/confighelperutil.h"
 #include "publicenum.h"
 
 

@@ -1,5 +1,5 @@
 ﻿#include "sqlservice.h"
-#include "confighelperutil.h"
+#include "confighelperutil/confighelperutil.h"
 #include <QCryptographicHash>
 #include "global.h"
 #include "publicenum.h"
@@ -38,7 +38,7 @@ bool SQLService::checkEmployerInfo(const QString &uuid, const QString &password,
         //QByteArray bapass = QCryptographicHash::hash(password.toUtf8(),QCryptographicHash::Md5);
         if(password == sql_user.at(EntityIndex::password_index))
         {
-            *out_profess = sql_user.at(1).toInt();
+            *out_profess = sql_user.at(EntityIndex::profess_index).toInt();
             return true;
         }
         else

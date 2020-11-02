@@ -1,5 +1,5 @@
-include(confighelperutil/confighelperutil.pri)
-include(encryputil/encryputil.pri)
+include($$PWD/confighelperutil/confighelperutil.pri)
+include($$PWD/encryputil/encryputil.pri)
+include($$PWD/stringutil/stringutil.pri)
 
-INCLUDEPATH += $$PWD/confighelperutil
-INCLUDEPATH += $$PWD/encryputil
+INCLUDEPATH += $$PWD/

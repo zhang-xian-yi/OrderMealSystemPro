@@ -1,5 +1,5 @@
 ﻿#include "mysqloper.h"
-#include "confighelperutil.h"
+#include "confighelperutil/confighelperutil.h"
 #include "global.h"
 #include "publicenum.h"
 #include <QSqlError>
@@ -105,7 +105,5 @@ Entity MySqlOper::getEmployerRecord(const QString &table_name, const QString &p_
     {
         DEBUG_MYSQL("exec error %s",querySet.lastError().text().toStdString().c_str());
     }
-
-
     return entity;
 }

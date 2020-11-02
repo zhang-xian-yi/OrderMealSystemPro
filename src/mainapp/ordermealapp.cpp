@@ -4,7 +4,7 @@
 #include <QMovie>
 #include <QThread>
 #include <QMessageBox>
-#include "confighelperutil.h"
+#include "confighelperutil/confighelperutil.h"
 #include "publicenum.h"
 
 OrderMealApp::OrderMealApp()

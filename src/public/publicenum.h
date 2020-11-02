@@ -41,7 +41,7 @@ enum EEntityFlag{
 };
 
 enum EProfessType{
-    Visitor = 0,
+    Visitor = 1,
     Sevicr,
     Cooker,
     Counter,

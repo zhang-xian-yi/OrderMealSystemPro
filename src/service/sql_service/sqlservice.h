@@ -1,7 +1,7 @@
 ﻿#ifndef SQLSERVICE_H
 #define SQLSERVICE_H
-#include "sqliteoper.h"
-#include "mysqloper.h"
+#include "mysql/mysqloper.h"
+#include "sqlite/sqliteoper.h"
 #include "entity.h"
 
 class SQLService

@@ -2,7 +2,6 @@
 #include <QTextCodec>
 
 #include "confighelperutil.h"
-#include "encryputil.h"
 #include "global.h"
 
 #if _MSC_VER >= 1600

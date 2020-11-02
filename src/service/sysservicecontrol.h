@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QAbstractListModel>
-#include "sqlservice.h"
-#include "qmlservice.h"
+#include "sql_service/sqlservice.h"
+#include "qml_service/qmlservice.h"
 
 class SysServiceControl:public QObject
 {

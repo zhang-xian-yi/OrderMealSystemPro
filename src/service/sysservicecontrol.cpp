@@ -1,7 +1,6 @@
 ﻿#include "sysservicecontrol.h"
 #include "global.h"
 
-
 SysServiceControl::SysServiceControl(QObject* parent):
     QObject(parent),
     m_sql_service(new SQLService),
@@ -54,36 +53,14 @@ void SysServiceControl::slot_dealLogin(const QString name,const QString passwd)
     if(m_sql_service->checkEmployerInfo(name,passwd,&profess))
     {
         emit signal_login_info(PublicType::LOGIN_SUCC);
-        switch (profess)
+        m_qml_service->setSystemType(profess);
+
+        /*使用 子系统 的上下文 并展示*/
+        if (! m_qml_service->startChildSystem())
         {
-            default:break;
-            case PublicType::Sevicr:
-            {
-                /*使用 servicer 的上下文 并展示*/
-                if (! m_qml_service->initServicerContext())
-                {
-                    emit signal_stopApp(PublicType::LOAD_UI_ERROR);
-                    DEBUG_SERVICE("load servicer qml ui error");
-                }
-                break;
-            }
-            case PublicType::Cooker:
-            {
-
-                break;
-            }
-            case PublicType::Counter:
-            {
-
-                break;
-            }
-            case PublicType::Manager:
-            {
-
-                break;
-            }
+            emit signal_stopApp(PublicType::LOAD_UI_ERROR);
+            DEBUG_SERVICE("load servicer qml ui error");
         }
-
     }
     else
     {

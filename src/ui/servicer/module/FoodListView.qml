@@ -61,7 +61,7 @@ Item{
             }
 
             Text {
-                text: food_desc_txt;
+                text: food_detail_txt;
                 anchors.verticalCenter:  parent.verticalCenter;
                 anchors.left: food_name_id.right;
                 anchors.leftMargin: 10;

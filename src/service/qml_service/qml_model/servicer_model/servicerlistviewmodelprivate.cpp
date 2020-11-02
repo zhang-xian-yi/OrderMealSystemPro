@@ -42,7 +42,7 @@ QVariant ServicerListviewModelPrivate::data(const QModelIndex &index, int role )
         case ServicerModelSpace::FoodPrice:
             ret = m_contexts.at(index.row()).at(ServicerModelSpace::Price_index);
             break;
-        case ServicerModelSpace::FoodDesc:
+        case ServicerModelSpace::FoodDetail:
             ret = m_contexts.at(index.row()).at(ServicerModelSpace::Desc_index);
             break;
         case ServicerModelSpace::FoodImgUrl:
@@ -68,7 +68,7 @@ QHash<int, QByteArray> ServicerListviewModelPrivate::roleNames() const
     {
         roles.insert(ServicerModelSpace::FoodName, "food_name_txt");
         roles.insert(ServicerModelSpace::FoodPrice, "food_price_txt");
-        roles.insert(ServicerModelSpace::FoodDesc, "food_desc_txt");
+        roles.insert(ServicerModelSpace::FoodDetail, "food_detail_txt");
         roles.insert(ServicerModelSpace::FoodImgUrl,"food_img");
         flag = true;
     }

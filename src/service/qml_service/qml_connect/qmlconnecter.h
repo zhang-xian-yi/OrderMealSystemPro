@@ -2,7 +2,7 @@
 #define QMLCONNECTER_H
 
 #include <QObject>
-#include "qml_model/modelfactory.h"
+#include "qml_service/beanfactory.h"
 
 class QMLCmdConnecter : public QObject
 {

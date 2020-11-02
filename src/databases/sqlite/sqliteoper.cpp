@@ -1,7 +1,7 @@
 ﻿#include "sqliteoper.h"
 #include <QSqlError>
 #include <QSqlQuery>
-#include "confighelperutil.h"
+#include "confighelperutil/confighelperutil.h"
 #include "global.h"
 #include <QFile>
 
