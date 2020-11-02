@@ -30,11 +30,13 @@ public:
     ~ServicerListviewModelPrivate();
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const ;
     int rowCount(const QModelIndex &parent) const;
-    bool getDataFromMysql();
+
+    bool getDataFromMysql(const QString& type);
 
     QHash<int, QByteArray> roleNames() const;
 public:
     QList<Entity> m_contexts;
+    MySqlOper* m_mysql_oper;
 };
 
 #endif // SERVICERLISTVIEWMODELPRIVATE_H

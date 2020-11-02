@@ -12,7 +12,7 @@ public:
     MySqlOper();
     ~MySqlOper();
     Entity getRecord(const QString& table_name,const QString& p_key,const QString& value,const int& flag);
-
+    QList<Entity> getFoodListByType(const QString& type);
 private:
     void initConfig();
     Entity getEmployerRecord(const QString &table_name, const QString &p_key, const QString &value);

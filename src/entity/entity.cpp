@@ -4,6 +4,11 @@ Entity::Entity(QVariantList data) : _data(data){
 
 }
 
+Entity::Entity(QStringList data)
+{
+    setData(data);
+}
+
 
 Entity::Entity(){
 

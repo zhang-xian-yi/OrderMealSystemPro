@@ -5,11 +5,9 @@
 
 ServicerListviewModel::ServicerListviewModel(QObject *parent):
     QAbstractListModel(parent),
-    m_service(new ServicerListviewModelPrivate)
+    m_service(new ServicerListviewModelPrivate())
 {
 
-    //初始化数据
-    m_service->getDataFromMysql();
 }
 
 ServicerListviewModel::~ServicerListviewModel()
@@ -22,12 +20,12 @@ ServicerListviewModel::~ServicerListviewModel()
 
 void ServicerListviewModel::setNameId(const QString &name)
 {
-    this->name_id = name;
+    this->type_id = name;
 }
 
 void ServicerListviewModel::initByNameId()
 {
-    m_service->getDataFromMysql();
+    m_service->getDataFromMysql(this->type_id);
 }
 
 int ServicerListviewModel::rowCount(const QModelIndex &parent) const

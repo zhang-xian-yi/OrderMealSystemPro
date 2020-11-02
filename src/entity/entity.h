@@ -11,6 +11,7 @@ class Entity
 public:
     explicit Entity();
     Entity(QVariantList data);
+    Entity(QStringList data);
 
     QVariantList data() const;
     void setData(const QVariantList data);

@@ -1,6 +1,6 @@
 ﻿#include "servicerlistviewmodelprivate.h"
 
-ServicerListviewModelPrivate::ServicerListviewModelPrivate()
+ServicerListviewModelPrivate::ServicerListviewModelPrivate():m_mysql_oper(new MySqlOper)
 {
 
 }
@@ -81,18 +81,15 @@ int ServicerListviewModelPrivate::rowCount(const QModelIndex &parent) const
     return m_contexts.size();
 }
 
-bool ServicerListviewModelPrivate::getDataFromMysql()
+bool ServicerListviewModelPrivate::getDataFromMysql(const QString& type)
 {
     //清空数据 保证每个界面的数据都会实时更新
     m_contexts.clear();
 
-    Entity item(QVariantList() << QVariant("鱼香肉丝") << QVariant("15")<<QVariant("利用xxxxxx")<< QVariant("http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg")<<1 );
-    Entity item1(QVariantList() << "心痛水" << "88"<<"喝下必定心痛"<<"http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg"<<2);
-    Entity item2(QVariantList() << "甜皮鸭" << "15"<<"一直骑着皮皮虾的甜皮鸭"<<"http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg"<<3);
-    Entity item3(QVariantList() << "最后的火焰神迹" << "9"<<"让人体会到什么是火焰神迹"<<"http://www.zhangxianyi4work.work:8088/orderSys/food/hgr.jpg"<<4);
-    m_contexts.push_back(item);
-    m_contexts.push_back(item1);
-    m_contexts.push_back(item2);
-    m_contexts.push_back(item3);
+    QList<Entity> list = m_mysql_oper->getFoodListByType(type);
+    foreach(Entity tmp,list)
+    {
+        m_contexts.push_back(tmp);
+    }
     return true;
 }

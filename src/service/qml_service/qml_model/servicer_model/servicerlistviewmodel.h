@@ -18,9 +18,10 @@ public:
 
 protected:
     QHash<int, QByteArray> roleNames() const override;
+
 private:
     ServicerListviewModelPrivate* m_service;
-    QString name_id;
+    QString type_id;
 };
 
 #endif // SERVICERLISTVIEWMODEL_H

@@ -15,15 +15,20 @@ MySqlOper::MySqlOper()
 
 MySqlOper::~MySqlOper()
 {
-
+    m_mysql_db.close();
 }
 
 void MySqlOper::initConfig()
 {
     if(QSqlDatabase::contains("qt_sql_default_connection"))
     {
-        QSqlDatabase::removeDatabase("qt_sql_default_connection");
+        QString name;
+        {
+            name = QSqlDatabase::database().connectionName();
+        }
+        QSqlDatabase::removeDatabase(name);
         m_mysql_db = QSqlDatabase::addDatabase("QMYSQL");
+
     }
     else
     {
@@ -72,6 +77,35 @@ Entity MySqlOper::getRecord(const QString &table_name, const QString &p_key, con
     return Entity();
 }
 
+QList<Entity> MySqlOper::getFoodListByType(const QString &type)
+{
+    QSqlQuery querySet;
+    static QList<Entity> result_list;
+    result_list.clear();
+    /*sql 语句 加上 英文 ；*/
+    QString sql = "call getFoodListByType('%1');";
+    sql = sql.arg(type);
+    DEBUG_MYSQL("call procedure sql %s",sql.toStdString().c_str());
+    if( querySet.exec(sql) )
+    {
+        while (querySet.next())
+        {
+            QStringList list;
+            list<<querySet.value("name").toString()
+                <<querySet.value("price").toString()
+                <<querySet.value("detail").toString()
+                <<querySet.value("imgurl").toString();
+            Entity entity(list);
+            result_list.append(entity);
+        }
+    }
+    else
+    {
+        DEBUG_MYSQL("exec error %s",querySet.lastError().text().toStdString().c_str());
+    }
+    return result_list;
+}
+
 
 
 bool  MySqlOper::executeSql(const QString &sql)
@@ -90,7 +124,7 @@ Entity MySqlOper::getEmployerRecord(const QString &table_name, const QString &p_
     DEBUG_MYSQL("sql %s",sql.toStdString().c_str());
     if( querySet.exec(sql))
     {
-        if (querySet.first() && querySet.isValid())
+        if (querySet.first() )
         {
             QStringList list;
             list<<querySet.value("id").toString()
