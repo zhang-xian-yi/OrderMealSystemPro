@@ -7,7 +7,7 @@
 
 SQLService::SQLService():
     m_sqlite_dao(new SQLiteOper),
-    m_mysql_dao(new MySqlOper)
+    m_mysql_dao(MySqlOper::getInstance())
 {
 
 }
@@ -17,11 +17,14 @@ SQLService::~SQLService()
     if(nullptr != m_sqlite_dao)
     {
         delete m_sqlite_dao;
+        m_sqlite_dao = nullptr;
     }
+    /* mysql_dao 为 单例指针 不需要哦释放静态内存
     if(nullptr != m_mysql_dao)
     {
-        delete m_mysql_dao;
+        delete MySqlOper::getInstance();
     }
+    */
 }
 
 

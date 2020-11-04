@@ -19,6 +19,11 @@ ISystem::~ISystem()
     }
 }
 
+QMLCmdConnecter *ISystem::getCmdConnect() const
+{
+    return this->m_cmd_connect;
+}
+
 bool ISystem::initContext()
 {
     /*注册对象必须放在初始化 QML 上下文环境之前 */

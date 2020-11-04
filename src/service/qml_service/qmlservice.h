@@ -15,6 +15,7 @@ public:
     /*停止子系统*/
     bool stopChildSystem();
     void setSystemType(const int& type);
+
 private:
     bool initContext();
 private:

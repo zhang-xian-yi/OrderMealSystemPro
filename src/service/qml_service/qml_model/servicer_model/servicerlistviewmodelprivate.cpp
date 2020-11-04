@@ -1,6 +1,7 @@
 ﻿#include "servicerlistviewmodelprivate.h"
 
-ServicerListviewModelPrivate::ServicerListviewModelPrivate():m_mysql_oper(new MySqlOper)
+ServicerListviewModelPrivate::ServicerListviewModelPrivate():
+    m_mysql_oper(MySqlOper::getInstance())
 {
 
 }

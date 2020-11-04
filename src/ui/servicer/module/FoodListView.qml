@@ -9,6 +9,8 @@ Item{
     implicitHeight: 360;
 
     property alias model_name: listView.model;
+    signal signal_add(string name,int price_value);
+    signal signal_devide(string name,int price_value);
     ListView {
         id: listView
         anchors.fill: parent;
@@ -53,6 +55,7 @@ Item{
             }
 
             Text {
+                id:food_price;
                 text: food_price_txt;
                 anchors.left: img_rect.right;
                 anchors.leftMargin: 16;
@@ -87,7 +90,7 @@ Item{
                 anchors.top: parent.top;
                 anchors.topMargin:  10;
                 onClicked: {
-                    //CmdConnecter.handleCmd();
+                    signal_add(food_name_id.text,food_price.text);
                 }
 
             }
@@ -103,7 +106,7 @@ Item{
                 anchors.bottom: parent.bottom;
                 anchors.bottomMargin: 10;
                 onClicked: {
-
+                    signal_devide(food_name_id.text,food_price.text);
                 }
             }
 

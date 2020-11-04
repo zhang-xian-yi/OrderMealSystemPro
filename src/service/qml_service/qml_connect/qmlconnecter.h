@@ -4,6 +4,14 @@
 #include <QObject>
 #include "qml_service/beanfactory.h"
 
+namespace CmdTypeSpace {
+enum CmdType{
+    Servicer_Submit_FoodList = 1,
+    Cooker_Finish_One
+};
+}
+
+
 class QMLCmdConnecter : public QObject
 {
     Q_OBJECT

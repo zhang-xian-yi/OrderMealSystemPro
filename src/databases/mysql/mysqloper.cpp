@@ -7,6 +7,8 @@
 #include <QFile>
 #include <QVariantList>
 
+/*类外定义 静态的变量*/
+QSqlDatabase MySqlOper::m_mysql_db;
 
 MySqlOper::MySqlOper()
 {
@@ -22,6 +24,7 @@ void MySqlOper::initConfig()
 {
     if(QSqlDatabase::contains("qt_sql_default_connection"))
     {
+
         QString name;
         {
             name = QSqlDatabase::database().connectionName();
@@ -29,13 +32,15 @@ void MySqlOper::initConfig()
         QSqlDatabase::removeDatabase(name);
         m_mysql_db = QSqlDatabase::addDatabase("QMYSQL");
 
+        /*
+        m_mysql_db = QSqlDatabase::database("mysql_connect");
+        */
     }
     else
     {
         //初始化 mysql 的私有变量
         m_mysql_db = QSqlDatabase::addDatabase("QMYSQL");
     }
-
 
     //获取配置文件中的 数据库的配置信息
     QString db_name  = ConfigHelperUtil::getInstance().getValue("MySqlConfig","database_name");

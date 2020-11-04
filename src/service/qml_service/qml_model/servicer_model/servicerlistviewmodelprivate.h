@@ -36,7 +36,7 @@ public:
     QHash<int, QByteArray> roleNames() const;
 public:
     QList<Entity> m_contexts;
-    MySqlOper* m_mysql_oper;
+    MySqlOper* m_mysql_oper = nullptr;
 };
 
 #endif // SERVICERLISTVIEWMODELPRIVATE_H
