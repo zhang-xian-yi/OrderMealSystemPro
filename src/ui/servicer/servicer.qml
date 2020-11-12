@@ -77,7 +77,6 @@ ApplicationWindow{
             }
         }
 
-
         FoodListView{
             id:soup_list_view;
             model_name: soup_model;
@@ -151,11 +150,11 @@ ApplicationWindow{
         for(var key in food_list)
         {
             food_str += key;
-            food_str += "X"
+            food_str += ":"
             food_str += food_list[key];
             food_str += ',';
         }
-        return food_str;
+        return food_str.replace("undefined","");
     }
 
     function handleAddFood(name,price_value)

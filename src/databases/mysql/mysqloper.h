@@ -36,6 +36,7 @@ private:
     MySqlOper &operator=(MySqlOper &)=delete;
 private:
     static QSqlDatabase m_mysql_db;
+    static QString m_connect_name;
 };
 
 #endif // MYSQLOPER_H

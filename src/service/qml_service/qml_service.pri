@@ -6,8 +6,7 @@ include($$PWD/qml_connect/qml_connect.pri)
 include($$PWD/qml_system/qml_system.pri)
 
 HEADERS += \
-    $$PWD/qmlservice.h \
-    $$PWD/beanfactory.h
+    $$PWD/qmlservice.h
 
 SOURCES += \
     $$PWD/qmlservice.cpp

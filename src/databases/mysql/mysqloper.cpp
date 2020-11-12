@@ -6,9 +6,11 @@
 #include <QSqlQuery>
 #include <QFile>
 #include <QVariantList>
+#include <QDateTime>
 
 /*类外定义 静态的变量*/
 QSqlDatabase MySqlOper::m_mysql_db;
+QString MySqlOper::m_connect_name = "";
 
 MySqlOper::MySqlOper()
 {
@@ -17,31 +19,23 @@ MySqlOper::MySqlOper()
 
 MySqlOper::~MySqlOper()
 {
-    m_mysql_db.close();
+    if (m_mysql_db.isValid())
+    {
+        if (m_mysql_db.isOpen())
+        {
+            m_mysql_db.close();
+        }
+        m_mysql_db = QSqlDatabase::database("", false);
+        //QSqlDatabase::removeDatabase(m_connect_name);
+    }
 }
 
 void MySqlOper::initConfig()
 {
-    if(QSqlDatabase::contains("qt_sql_default_connection"))
-    {
-
-        QString name;
-        {
-            name = QSqlDatabase::database().connectionName();
-        }
-        QSqlDatabase::removeDatabase(name);
-        m_mysql_db = QSqlDatabase::addDatabase("QMYSQL");
-
-        /*
-        m_mysql_db = QSqlDatabase::database("mysql_connect");
-        */
-    }
-    else
-    {
-        //初始化 mysql 的私有变量
-        m_mysql_db = QSqlDatabase::addDatabase("QMYSQL");
-    }
-
+    //QDateTime dateTime = QDateTime::currentDateTime();
+    //m_connect_name = "qt_sql_default_connect";
+    //初始化 mysql 的私有变量
+    m_mysql_db = QSqlDatabase::addDatabase("QMYSQL");
     //获取配置文件中的 数据库的配置信息
     QString db_name  = ConfigHelperUtil::getInstance().getValue("MySqlConfig","database_name");
     QString hostname = ConfigHelperUtil::getInstance().getValue("MySqlConfig","hostname");

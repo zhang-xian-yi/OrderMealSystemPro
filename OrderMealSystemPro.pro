@@ -42,6 +42,10 @@ OBJECTS_DIR = $$PWD/CompileTheGeneratedFile/temp/obj
 UI_HEADERS_DIR = $$PWD/CompileTheGeneratedFile/temp/ui
 DESTDIR = $$PWD/CompileTheGeneratedFile/bin
 
+OUT_PWD = $$PWD/CompileTheGeneratedFile/bin
+
+LIBS += -L $$OUT_PWD/lib/sql/ -llibmysql
+LIBS += -L$$OUT_PWD/lib/mqtt/ -lQt5Mqtt
 
 
 #资源文件

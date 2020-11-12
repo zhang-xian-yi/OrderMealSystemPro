@@ -10,7 +10,6 @@
 #define DEBUG_UI_TRACE
 #define DEBUG_SERVICE_TRACE
 */
-
 #define LOG
 #define DEBUG_CONNECT_TRACE
 

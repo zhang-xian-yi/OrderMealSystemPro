@@ -6,7 +6,7 @@
 #include "global.h"
 #include "publicenum.h"
 #include "confighelperutil/confighelperutil.h"
-#include "qml_service/beanfactory.h"
+#include "beanfactory.h"
 #include "qml_service/qml_model/servicer_model/servicerlistviewmodel.h"
 
 ServicerSystem::ServicerSystem()

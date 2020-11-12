@@ -15,12 +15,11 @@ bool QMLCmdConnecter::init()
 
 void QMLCmdConnecter::handleCmd(const int &cmd,const QString& content)
 {
-    DEBUG_CONNECT("connecter recv %d,content: $s",cmd,content.toStdString().c_str());
+    DEBUG_CONNECT("connecter recv %d,content: %s",cmd,content.toStdString().c_str());
     switch (cmd)
     {
         case CmdTypeSpace::Servicer_Submit_FoodList:
         {
-            QList<QString> list = content.split('`');
 
             break;
         }

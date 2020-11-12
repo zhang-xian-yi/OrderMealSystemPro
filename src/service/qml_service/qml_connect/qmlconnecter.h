@@ -2,7 +2,7 @@
 #define QMLCONNECTER_H
 
 #include <QObject>
-#include "qml_service/beanfactory.h"
+#include "beanfactory.h"
 
 namespace CmdTypeSpace {
 enum CmdType{
