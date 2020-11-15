@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "beanfactory.h"
-
+#include "qml_data_handle/handleqmldatacontext.h"
 namespace CmdTypeSpace {
 enum CmdType{
     Servicer_Submit_FoodList = 1,
@@ -28,6 +28,7 @@ public:
 
 private:
     bool m_app_run;
+    HandleQMLDataContext* m_handle_qml_data = nullptr;
 };
 
 #endif // QMLCONNECTER_H

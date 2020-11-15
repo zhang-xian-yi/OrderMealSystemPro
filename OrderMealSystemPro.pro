@@ -44,10 +44,11 @@ DESTDIR = $$PWD/CompileTheGeneratedFile/bin
 
 OUT_PWD = $$PWD/CompileTheGeneratedFile/bin
 
-LIBS += -L $$OUT_PWD/lib/sql/ -llibmysql
-LIBS += -L$$OUT_PWD/lib/mqtt/ -lQt5Mqtt
+LIBS   += -L$$PWD/appfile/lib/ -llibmysql
 
 
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/appfile/lib/ -lQt5Mqtt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/appfile/lib/ -lQt5Mqttd
 #资源文件
 win32:RC_FILE = $$PWD/appfile/qrc/OrderMeal.rc
 RESOURCES += $$PWD/appfile/qrc/login.qrc
