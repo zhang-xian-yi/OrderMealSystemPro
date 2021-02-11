@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../appfile/images/login/1.png</file>
+        <file>../../appfile/images/login/background.png</file>
+        <file>../../appfile/images/login/login.png</file>
+        <file>../../appfile/images/login/osk.exe</file>
+        <file>../../appfile/images/login/template.png</file>
+        <file>../../appfile/images/login/top_img0.png</file>
+        <file>../../appfile/images/login/top_img1.png</file>
+        <file>../../appfile/images/login/top_img2.png</file>
+        <file>../../appfile/images/login/top_img3.png</file>
+        <file>../../appfile/images/login/top_img4.png</file>
+        <file>../../appfile/images/login/top_img5.png</file>
+        <file>../../appfile/images/login/trayicon.ico</file>
+        <file>../../appfile/images/login/ico/close.png</file>
+        <file>../../appfile/images/login/ico/mini.png</file>
+        <file>../../appfile/images/login/ico/setting.png</file>
+        <file>../../appfile/images/login/ico/user0.png</file>
+        <file>../../appfile/images/login/ico/user1.png</file>
+        <file>../../appfile/images/login/ico/user2.png</file>
+        <file>../../appfile/images/login/ico/user3.png</file>
+        <file>../../appfile/images/login/ico/user4.png</file>
+        <file>../../appfile/images/login/ico/user5.png</file>
+    </qresource>
+</RCC>

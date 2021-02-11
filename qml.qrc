@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/om_ui/servicerui/servicer.qml</file>
+        <file>src/om_ui/servicerui/component/ZButton.qml</file>
+        <file>src/om_ui/servicerui/component/ZListViewDelegrate.qml</file>
+        <file>src/om_ui/servicerui/component/ZIconButton.qml</file>
+        <file>src/om_ui/servicerui/component/ZButtonStyle.qml</file>
+        <file>src/om_ui/servicerui/component/ZStyle.qml</file>
+        <file>src/om_ui/servicerui/component/ZUiGlobal.qml</file>
+        <file>src/om_ui/servicerui/module/FoodListView.qml</file>
+        <file>src/om_ui/servicerui/module/SlidesShow.qml</file>
+        <file>src/om_ui/servicerui/component/ZBaseTabBar.qml</file>
+        <file>appfile/images/qmlicons/drink.png</file>
+        <file>appfile/images/qmlicons/meat.png</file>
+        <file>appfile/images/qmlicons/noodles.png</file>
+        <file>appfile/images/qmlicons/soup.png</file>
+        <file>appfile/images/qmlicons/vegetable.png</file>
+    </qresource>
+</RCC>
