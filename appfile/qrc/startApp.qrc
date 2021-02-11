@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>../../appfile/images/start/init.gif</file>
-    </qresource>
-</RCC>
