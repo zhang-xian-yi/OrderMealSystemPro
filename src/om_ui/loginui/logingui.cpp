@@ -1,6 +1,8 @@
-﻿#include "logingui.h"
+﻿#include <QMessageBox>
+#include "logingui.h"
 #include "loginui/loginwidgets.h"
 #include "../om_common/datastruct/datastructs.h"
+
 
 LoginGUI::LoginGUI()
 {
@@ -27,6 +29,17 @@ int LoginGUI::startGui()
 int LoginGUI::stopGui()
 {
     return m_loginUI->close();
+}
+/**
+* @brief: 接受 控制中心传来的登录错误信息
+* @param：
+* @return:
+* @date: 2021-02-12
+*/
+void LoginGUI::slotResponseLoginFailed(const ParameterData &info)
+{
+    QString errorInfo = info.getValue("msg");
+    QMessageBox::warning(m_loginUI,QStringLiteral("登录失败"),errorInfo);
 }
 /**
 * @brief: 登录按钮的响应函数

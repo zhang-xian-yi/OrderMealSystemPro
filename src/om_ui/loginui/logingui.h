@@ -23,6 +23,8 @@ public:
 signals:
     void signalLogin(const ParameterData& UserInfo);
     void signalAppExit();
+public slots:
+    void slotResponseLoginFailed(const ParameterData& info);
 private slots:
     void slotLoginBtnClick(const QString& username,const QString& pass);
 private:

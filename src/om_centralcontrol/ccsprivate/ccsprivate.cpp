@@ -60,19 +60,21 @@ ParameterData CCSPrivate::handleLoginService(const BaseStruct *fromUi)
     if( nullptr!= fromUIData && nullptr != fromDatabaseData)
     {
         QString username1 = fromUIData->getValue("username");
-        QString username2 = fromDatabaseData->at(MysqlDaoImpl::E_NAME_INDEX).toString();
+        QString username2 = fromDatabaseData->at(MysqlDaoImpl::E_ID_INDEX).toString();
+        ParameterData ret;
         if(username1 == username2)
         {
             QString password1 = fromUIData->getValue("password");
             QString password2 = fromDatabaseData->at(MysqlDaoImpl::E_PASS_INDEX).toString();
             if(password1 == password2)
             {
-                ParameterData ret;
                 ret.appendItem("is_vaild","true");
                 ret.appendItem("profess",fromDatabaseData->at(MysqlDaoImpl::E_PROFESS_INDEX).toString());
                 return ret;
             }
         }
+        ret.appendItem("is_vaild","false");
+        return ret;
     }
     return ParameterData();
 }

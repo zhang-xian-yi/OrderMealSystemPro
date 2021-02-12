@@ -1,6 +1,7 @@
 ﻿#include "mysqloper.h"
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QFile>
 #include <QVariantList>
 #include <QDateTime>
@@ -41,36 +42,6 @@ MySqlOper::MySqlOper(const BaseStruct *pPara)
     }
 
 }
-
-QList<Entity> MySqlOper::getFoodListByType(const QString &type)
-{
-    QSqlQuery querySet(m_mysql_db);
-    QList<Entity> result_list;
-    result_list.clear();
-    /*sql 语句 加上 英文 ；*/
-    QString sql = "call getFoodListByType('%1');";
-    sql = sql.arg(type);
-    DEBUG_MYSQL("call procedure sql %s",sql.toStdString().c_str());
-    if( querySet.exec(sql) )
-    {
-        while (querySet.next())
-        {
-            QStringList list;
-            list<<querySet.value("name").toString()
-                <<querySet.value("price").toString()
-                <<querySet.value("detail").toString()
-                <<querySet.value("imgurl").toString();
-            Entity entity(list);
-            result_list.append(entity);
-        }
-    }
-    else
-    {
-        DEBUG_MYSQL("exec error %s",querySet.lastError().text().toStdString().c_str());
-    }
-    return result_list;
-}
-
 /**
 * @brief: 初始化配置文件参数
 * @param：
@@ -109,8 +80,13 @@ void MySqlOper::initConfig(const ParameterData *pPara)
 }
 
 
-
-bool  MySqlOper::executeSql(const QString &sql)
+/**
+* @brief: 执行该sql 语句
+* @param：
+* @return:
+* @date: 2021-02-12
+*/
+bool MySqlOper::executeSql(const QString &sql)
 {
     QSqlQuery querySet(m_mysql_db);
     return querySet.exec(sql);
@@ -121,23 +97,38 @@ bool  MySqlOper::executeSql(const QString &sql)
 * @return:
 * @date: 2021-01-19
 */
-Entity MySqlOper::getEmployerRecord(const QString &table_name, const QString &p_key, const QString &value)
+Entity MySqlOper::getEmployerRecord(const QString &p_key, const QString &value)
 {
-    QSqlQuery querySet(m_mysql_db);
-    Entity entity;
+    return getRecord("db_employer",p_key,value);;
+}
+/**
+* @brief: 获取 指定表中的指定键值 的一条记录  泛型--编程 通用的查询记录
+* @param：
+* @return:
+* @date: 2021-02-12
+*/
+Entity MySqlOper::getRecord(const QString &table_name, const QString &p_key, const QString &value)
+{
     QString sql = "select * from %1 where %2 = %3;";
     sql = sql.arg(table_name).arg(p_key).arg(value);
+    //构建 query 方法
+    QSqlQuery querySet(sql,m_mysql_db);
+    Entity entity;
     DEBUG_MYSQL("sql %s",sql.toStdString().c_str());
-    if( querySet.exec(sql))
+    if( querySet.next())
     {
-        if (querySet.first() )
+        QSqlRecord rec = querySet.record();
+        if(! rec.isEmpty())
         {
             QStringList list;
-            list<<querySet.value("id").toString()
-                <<querySet.value("profess").toString()
-                <<querySet.value("name").toString()
-                <<querySet.value("password").toString();
-            DEBUG_MYSQL("sql user id %s",list.join(',').toStdString().c_str());
+            //获取记录 字段的数目
+            for (int index = 0; index < rec.count(); ++index)
+            {
+                if(! rec.value(index).isNull())
+                {
+                    list<<rec.value(index).toString();
+                }
+            }
             entity.setData(list);
         }
     }
@@ -146,4 +137,38 @@ Entity MySqlOper::getEmployerRecord(const QString &table_name, const QString &p_
         DEBUG_MYSQL("exec error %s",querySet.lastError().text().toStdString().c_str());
     }
     return entity;
+}
+/**
+* @brief: 获取 食物具体信息列表
+* @param：
+* @return:
+* @date: 2021-02-12
+*/
+QList<Entity> MySqlOper::getFoodListByType(const QString &type)
+{
+    QSqlQuery querySet(m_mysql_db);
+    QList<Entity> result_list;
+    result_list.clear();
+    /*sql 语句 加上 英文 ；*/
+    QString sql = "call getFoodListByType('%1');";
+    sql = sql.arg(type);
+    DEBUG_MYSQL("call procedure sql %s",sql.toStdString().c_str());
+    if( querySet.exec(sql) )
+    {
+        while (querySet.next())
+        {
+            QStringList list;
+            list<<querySet.value("name").toString()
+                <<querySet.value("price").toString()
+                <<querySet.value("detail").toString()
+                <<querySet.value("imgurl").toString();
+            Entity entity(list);
+            result_list.append(entity);
+        }
+    }
+    else
+    {
+        DEBUG_MYSQL("exec error %s",querySet.lastError().text().toStdString().c_str());
+    }
+    return result_list;
 }

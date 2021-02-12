@@ -36,14 +36,12 @@ BaseStruct *MysqlDaoImpl::getData(const BaseStruct *iPara, int flag)
 {
     if(IDao::E_EMPLOYER_INFO == flag)
     {
-
         Entity* pEntity = new Entity;
         const ParameterData* pCfgData = dynamic_cast<const ParameterData*>(iPara);
         //需要查询的信息
-        QString table_name = pCfgData->getValue("table_name");
-        QString key_name = pCfgData->getValue("key");
-        QString value = pCfgData->getValue("value");
-        *pEntity = m_mysqlDao->getEmployerRecord(table_name,key_name,value);
+        QString key_name = "id";
+        QString value = pCfgData->getValue("username");
+        *pEntity = m_mysqlDao->getEmployerRecord(key_name,value);
         return pEntity;
 
     }
@@ -55,7 +53,6 @@ BaseStruct *MysqlDaoImpl::getData(const BaseStruct *iPara, int flag)
         QString type = pCfgData->getValue("type");
         pEntityList->setEntityList(m_mysqlDao->getFoodListByType(type));
         return pEntityList;
-
     }
     return nullptr;
 }

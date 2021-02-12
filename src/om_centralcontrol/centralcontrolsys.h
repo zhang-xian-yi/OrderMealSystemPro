@@ -23,7 +23,8 @@ public:
     static CentralControlSys* getInstance();
 public:
 signals:
-    void signalResponseLogin(const ParameterData& data);
+    void signalResponseLoginSucc(const ParameterData& data);
+    void signalResponseLoginFailed(const ParameterData& data);
 public slots:
     void slotLogin(const ParameterData& fromUI );
 

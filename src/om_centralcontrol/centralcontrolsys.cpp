@@ -32,7 +32,7 @@ CentralControlSys *CentralControlSys::getInstance()
 }
 
 /**
-* @brief: 登录信息的响应函数
+* @brief: 登录信息的响应函数  通过用户校验后，成功登录的信号发送给app  失败信号发送给前端登录界面
 * @param：
 * @return:
 * @date: 2021-02-08
@@ -40,16 +40,15 @@ CentralControlSys *CentralControlSys::getInstance()
 void CentralControlSys::slotLogin(const ParameterData &fromUI)
 {
     ParameterData ret = m_servicePrivate->handleLoginService(&fromUI);
-    if(ret.getValue("msg") == "true")
+    if( "true" == ret.getValue("is_vaild")  )
     {
-        //登录成功
-        emit signalResponseLogin(ret);
+        emit signalResponseLoginSucc(ret);
     }
     else
     {
         //登录失败
         ret.appendItem("msg",QStringLiteral("登陆失败,密码或者账号错误"));
-        emit signalResponseLogin(ret);
+        emit signalResponseLoginFailed(ret);
     }
 }
 

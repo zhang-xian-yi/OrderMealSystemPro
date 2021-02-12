@@ -26,6 +26,7 @@ class OM_UI_EXPORT IGui:public QObject
 {
     Q_OBJECT
 public:
+    virtual ~IGui(){}
     virtual int startGui() = 0;
     virtual int stopGui() = 0;
 };

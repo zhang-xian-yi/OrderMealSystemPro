@@ -7,6 +7,7 @@ class IGui;
 class SystemTrayIcon;
 //中央控制系统
 class CentralControlSys;
+class ParameterData;
 
 class OrderMealApplication:public QObject
 {
@@ -17,6 +18,7 @@ public:
     bool stopApplication();
 private slots:
     void slotAppExit();
+    void slotResponseLogin(const ParameterData& data);
 private:
     void initApplication();
     void initConnects();
