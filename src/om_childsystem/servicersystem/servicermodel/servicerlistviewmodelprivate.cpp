@@ -18,15 +18,35 @@ ServicerListviewModelPrivate::~ServicerListviewModelPrivate()
         m_contexts.clear();
     }
 }
-
-bool ServicerListviewModelPrivate::setDataSource(const QList<Entity> &dataSource)
+/**
+* @brief: 获取数据 的 type
+* @param：
+* @return:
+* @date: 2021-02-15
+*/
+QString ServicerListviewModelPrivate::getNameId() const
 {
-    foreach(Entity entity,dataSource)
-    {
-        m_contexts.push_back(entity);
-    }
-    //todo  数据的entity 结构 不应该作为全局数据的处理 所以采用ParaMeterData 代替它
-    return true;
+    return this->m_type;
+}
+/**
+* @brief: 设置  数据 Type
+* @param：
+* @return:
+* @date: 2021-02-14
+*/
+void ServicerListviewModelPrivate::setNameId(const QString &name)
+{
+    m_type = name;
+}
+/**
+* @brief: 设置数据源  为 qml 界面访问的时候 的数据
+* @param：
+* @return:
+* @date: 2021-02-15
+*/
+void ServicerListviewModelPrivate::setDataSource(const QList<Entity> &data)
+{
+    m_contexts = data;
 }
 
 
@@ -87,6 +107,7 @@ QHash<int, QByteArray> ServicerListviewModelPrivate::roleNames() const
     }
     return roles;
 }
+
 
 
 int ServicerListviewModelPrivate::rowCount(const QModelIndex &parent) const

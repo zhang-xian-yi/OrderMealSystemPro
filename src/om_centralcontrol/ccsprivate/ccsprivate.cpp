@@ -70,11 +70,28 @@ ParameterData CCSPrivate::handleLoginService(const BaseStruct *fromUi)
             {
                 ret.appendItem("is_vaild","true");
                 ret.appendItem("profess",fromDatabaseData->at(MysqlDaoImpl::E_PROFESS_INDEX).toString());
+
+                //回收 从数据库申请的内存
+                delete pEntity;
                 return ret;
             }
         }
         ret.appendItem("is_vaild","false");
+        //回收 从数据库申请的内存
+        delete pEntity;
         return ret;
     }
+    //回收 从数据库申请的内存
+    delete pEntity;
     return ParameterData();
+}
+/**
+* @brief: 处理
+* @param：
+* @return:
+* @date: 2021-02-15
+*/
+BaseStruct* CCSPrivate::handleModelRequest(const ParameterData &request)
+{
+    return m_pDao->getData(&request,IDao::E_FOOD_LIST_INFO);
 }

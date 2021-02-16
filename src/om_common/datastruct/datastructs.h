@@ -18,6 +18,7 @@ class OM_COMMON_EXPORT ParameterData:public BaseStruct
 {
 public:
     explicit ParameterData();
+    explicit ParameterData(const QString& key,const QString& value);
     //插入一个键值对
     void appendItem(const QString& key,const QString& value);
     //通过键名 获取值

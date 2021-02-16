@@ -13,6 +13,7 @@
 
 //外部数据引用
 class ParameterData;
+class EntityList;
 //处理具体业务逻辑的类
 class CCSPrivate;
 class OM_CSS_EXPORT CentralControlSys:public QObject
@@ -25,9 +26,10 @@ public:
 signals:
     void signalResponseLoginSucc(const ParameterData& data);
     void signalResponseLoginFailed(const ParameterData& data);
+    void signalResponseModelRequest(const QString& tpye,const EntityList& dataSource);
 public slots:
     void slotLogin(const ParameterData& fromUI );
-
+    void slotGetFoodDataByTypeFromDatabase(const ParameterData& fromModel);
 private:
     // Forbid external construction
     CentralControlSys();

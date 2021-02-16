@@ -16,14 +16,6 @@
 #include <QMap>
 
 
-namespace BeanTypeSpace{
-enum BeanType{
-    Servicer_Lisstview_Model = 0,
-    Cooker_Listview_Model
-};
-}
-
-
 
 
 /* 注册的接口模板类*/
@@ -67,22 +59,9 @@ public:
         m_registryMap[id] = registrar;
         return true;
     }
-    //get all register bean info
-    QMap<QString,AbstractBean_t*> getAllRegistryBean()
-    {
-        QMap<QString,AbstractBean_t*> ret;
-        QMapIterator<QString, int> i(m_registryMap);
-        while (i.hasNext())
-        {
-            i.next();
-            ret.insert(i.key(),m_registryMap[i.key()]->createBean());
-        }
-        return ret;
-    }
-
 
     /*根据name  找到注册的register 然后通过registrar 创建对象*/
-    AbstractBean_t* createBean(const int& id)
+    AbstractBean_t* createBean(const QString& id)
     {
         /*find 返回迭代器指向当前查找元素的位置 否则返回map::end()位置*/
         if(m_registryMap.find(id) != m_registryMap.end())

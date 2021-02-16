@@ -30,14 +30,19 @@ class ServicerListviewModelPrivate
 public:
     explicit ServicerListviewModelPrivate();
     ~ServicerListviewModelPrivate();
-    bool setDataSource(const QList<Entity>& dataSource );
+    QString getNameId()const;
+    void setNameId(const QString& name);
+    void setDataSource(const QList<Entity>& data);
 public:
     //base func
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const ;
     int rowCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
-public:
+private:
+    //源数据
     QList<Entity> m_contexts;
+    //数据的类型
+    QString       m_type;
 };
 
 #endif // OM_DATAMODEL_SERVICERlISTVIEWMODELPRIVATE_H

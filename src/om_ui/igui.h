@@ -20,6 +20,7 @@ enum GUIType
 };
 }
 
+class BaseStruct;
 
 //启动gui 的接口
 class OM_UI_EXPORT IGui:public QObject

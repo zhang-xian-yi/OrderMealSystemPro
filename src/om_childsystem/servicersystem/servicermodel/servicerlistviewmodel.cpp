@@ -22,6 +22,16 @@ ServicerListviewModel::~ServicerListviewModel()
     }
 }
 /**
+* @brief: 获取数据的  类型 type
+* @param：
+* @return:
+* @date: 2021-02-15
+*/
+QString ServicerListviewModel::getNameId() const
+{
+    return m_service->getNameId();
+}
+/**
 * @brief: 设置 nameId
 * @param：
 * @return:
@@ -29,13 +39,17 @@ ServicerListviewModel::~ServicerListviewModel()
 */
 void ServicerListviewModel::setNameId(const QString &name)
 {
-    this->type_id = name;
+    m_service->setNameId(name);
 }
-
-void ServicerListviewModel::setDataSource(const EntityList &dataSource)
+/**
+* @brief: 设置数据源
+* @param：
+* @return:
+* @date: 2021-02-15
+*/
+void ServicerListviewModel::setDataSource(const EntityList &data)
 {
-    const QList<Entity> ret = dataSource.getEntityList();
-    m_service->setDataSource(ret);
+    m_service->setDataSource(data.getEntityList());
 }
 
 int ServicerListviewModel::rowCount(const QModelIndex &parent) const

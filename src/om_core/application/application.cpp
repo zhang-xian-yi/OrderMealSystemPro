@@ -1,12 +1,23 @@
 ﻿#include <QIcon>
 #include <QMessageBox>
+#include <QEventLoop>
+#include <QTimer>
+//common
 #include "../om_common/utils/confighelperutil/confighelperutil.h"
 #include "../om_common/datastruct/datastructs.h"
+//ui
 #include "../om_ui/igui.h"
 #include "../om_ui/loginui/logingui.h"
 #include "../om_ui/systemtrayicon/systemtrayicon.h"
+//ccs
 #include "../om_centralcontrol/centralcontrolsys.h"
+//服务员子系统
+#include "../om_childsystem/isystem.h"
+#include "../om_childsystem/servicersystem/servicerchildsystem.h"
 #include "application.h"
+
+
+
 /**
 * @brief: 单例指针的获取方法
 * @param：
@@ -32,6 +43,7 @@ OrderMealApplication::OrderMealApplication()
     QIcon icon(":/appfile/images/login/trayicon.ico");
     m_tray_icon = new SystemTrayIcon(strList,icon);
     m_control = CentralControlSys::getInstance();
+    m_childSystem = nullptr;
     //读取配置文件初始化 程序应用配置
     initApplication();
 }
@@ -83,6 +95,12 @@ bool OrderMealApplication::stopApplication()
         delete m_ui;
         m_ui = nullptr;
     }
+    if(nullptr != m_childSystem)
+    {
+        m_childSystem->stopSystem();
+        delete  m_childSystem;
+        m_childSystem = nullptr;
+    }
     if(nullptr != m_tray_icon)
     {
         delete m_tray_icon;
@@ -109,15 +127,33 @@ void OrderMealApplication::slotAppExit()
 */
 void OrderMealApplication::slotResponseLogin(const ParameterData &data)
 {
-    QString isLoginOk = data.getValue("is_vaild");
-    if("true" == isLoginOk)
+    stopLoginUi();
+    QString professId = data.getValue("profess");
+    //获取子系统profess 标志 并初始化子系统
+    switch (professId.toInt())
     {
-        //删除登录界面
-        m_ui->stopGui();
-        delete m_ui;
-        m_ui = nullptr;
+        case ISystem::E_SERVICER_SYSTEM:
+        {
+            m_childSystem = new ServicerChildSystem();
+            connect(static_cast<ServicerChildSystem*>(m_childSystem),&ServicerChildSystem::signalGetFoodDataByType,
+                    m_control,&CentralControlSys::slotGetFoodDataByTypeFromDatabase);
+            connect(m_control,&CentralControlSys::signalResponseModelRequest,
+                    static_cast<ServicerChildSystem*>(m_childSystem),&ServicerChildSystem::slotFromDatabaseFood);
+            break;
+        }
     }
-    slotAppExit();
+    if(nullptr!=m_childSystem)
+    {
+        //初始化数据
+        m_childSystem->initModelData();
+        //启动子系统
+        m_childSystem->startSystem();
+    }
+    else
+    {
+        //结束程序
+        slotAppExit();
+    }
 }
 
 /**
@@ -136,6 +172,24 @@ void OrderMealApplication::initConnects()
     connect(m_tray_icon,SIGNAL(signalStopApp()),this,SLOT(slotAppExit() ) );
     //中央控制系统 和 application 的 connect
     connect(m_control,SIGNAL(signalResponseLoginSucc(const ParameterData&)),this,SLOT(slotResponseLogin(const ParameterData&)));
+    //model 与 ccs 的connect
+}
+/**
+* @brief: 停止 登陆界面的事件活动
+* @param：
+* @return:
+* @date: 2021-02-16
+*/
+void OrderMealApplication::stopLoginUi()
+{
+    //取消登录 与 中央控制系统的 信号槽链接
+    disconnect(static_cast<LoginGUI*>(m_ui),&LoginGUI::signalLogin,m_control,&CentralControlSys::slotLogin);
+    disconnect(static_cast<LoginGUI*>(m_ui),&LoginGUI::signalAppExit,this,&OrderMealApplication::slotAppExit);
+    disconnect(m_control,SIGNAL(signalResponseLoginFailed(const ParameterData&)),static_cast<LoginGUI*>(m_ui),SLOT(slotResponseLoginFailed(const ParameterData& )));
+    //删除登录界面
+    m_ui->stopGui();
+    delete m_ui;
+    m_ui = nullptr;
 }
 
 

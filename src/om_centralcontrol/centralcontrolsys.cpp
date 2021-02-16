@@ -51,4 +51,17 @@ void CentralControlSys::slotLogin(const ParameterData &fromUI)
         emit signalResponseLoginFailed(ret);
     }
 }
+/**
+* @brief: 从数据库 中获取 food 清单数据
+* @param：frommodel 一般为 type:"meat"  方式 其中 值由配置文件决定
+* @return: void
+* @date: 2021-02-15
+*/
+void CentralControlSys::slotGetFoodDataByTypeFromDatabase(const ParameterData &fromModel)
+{
+    BaseStruct* pBase = m_servicePrivate->handleModelRequest(fromModel);
+    EntityList* pList = dynamic_cast<EntityList*>(pBase);
+    QString type = fromModel.getValue("type");
+    emit signalResponseModelRequest(type,*pList);
+}
 

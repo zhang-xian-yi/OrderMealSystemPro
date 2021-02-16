@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui qml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = OrderMealSystem
 TEMPLATE = app
@@ -15,7 +15,7 @@ win32:RC_FILE = $$ROOT_PATH/appfile/qrc/OrderMeal.rc
 
 #外部依赖模块
 LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_common
-LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_datamodel
+LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_childsystem
 LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_databases
 LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_ui
 LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_centralcontrol

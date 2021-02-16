@@ -4,6 +4,7 @@
 
 class IDao;
 class BaseStruct;
+class EntityList;
 class CCSPrivate
 {
 public:
@@ -11,6 +12,7 @@ public:
     ~CCSPrivate();
     //处理登录的业务逻辑
     ParameterData handleLoginService(const BaseStruct* fromUi);
+    BaseStruct* handleModelRequest(const ParameterData& request);
 private:
     //获取配置文件的 mysql 配置信息
     ParameterData getMysqlConfigData();
