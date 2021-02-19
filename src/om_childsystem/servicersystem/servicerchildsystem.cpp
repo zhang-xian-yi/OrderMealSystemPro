@@ -8,10 +8,29 @@
 #include "../om_common/commoninc/debugdefine.h"
 #include "../om_common/datastruct/datastructs.h"
 #include "../om_ui/servicerui/servicergui.h"
+//network 网络通讯
+#include "../om_network/mqtt/mqttnetworkclicnt.h"
+#include "../om_network/qmlconnect/qmlconnecter.h"
 
 ServicerChildSystem::ServicerChildSystem()
 {
     m_qmlEngine = new QQmlApplicationEngine;
+    m_pCmdConnect = new QMLCmdConnecter;
+    m_qmlEngine->rootContext()->setContextProperty("CmdConnecter",m_pCmdConnect);
+    //根据配置文件信息 初始化 mqtt client
+    m_mqttClient = new MqttNetworkClicnt;
+    ParameterData mqttConfig;
+    QString mqttHost = ConfigHelperUtil::getInstance()->getValue("MQTTConfig","hostname");
+    QString mqttPort = ConfigHelperUtil::getInstance()->getValue("MQTTConfig","port");
+    QString mqttUsername = ConfigHelperUtil::getInstance()->getValue("MQTTConfig","username");
+    QString mqttPassword = ConfigHelperUtil::getInstance()->getValue("MQTTConfig","password");
+    mqttConfig.appendItem("hostname",mqttHost);
+    mqttConfig.appendItem("port",mqttPort);
+    mqttConfig.appendItem("username",mqttUsername);
+    mqttConfig.appendItem("password",mqttPassword);
+    bool ret = m_mqttClient->startClient(mqttConfig);
+    //connect 连接信号
+    connect(m_pCmdConnect,SIGNAL(signalSubmitFoodList(const QString& )),this,SLOT(slotPublishMsg(const QString&)));
     //此处初始化 发出的信号很可能还无法连接到具体槽函数  所以需要外部初始化
     //initModelData();
 }
@@ -24,6 +43,21 @@ ServicerChildSystem::~ServicerChildSystem()
         delete tmp;
     }
     m_modelList.clear();
+    if(nullptr != m_pCmdConnect)
+    {
+        delete m_pCmdConnect;
+        m_pCmdConnect = nullptr;
+    }
+    if(nullptr != m_mqttClient)
+    {
+        delete m_mqttClient;
+        m_mqttClient = nullptr;
+    }
+    if(nullptr != m_qmlEngine)
+    {
+        delete m_qmlEngine;
+        m_qmlEngine = nullptr;
+    }
 }
 /**
 * @brief: 启动 子系统
@@ -109,4 +143,19 @@ void ServicerChildSystem::initModelData()
         emit signalGetFoodDataByType(ParameterData("type",str_list[i]));
     }
     DEBUG_SERVICE("name:%s",str_list[0].toStdString().c_str());
+}
+/**
+* @brief: 发布消息
+* @param：
+* @return:
+* @date: 2021-02-19
+*/
+void ServicerChildSystem::slotPublishMsg(const QString &msg)
+{
+    QString topic = ConfigHelperUtil::getInstance()->getValue("MQTTConfig","cook_topic");
+    ParameterData mqttData;
+    mqttData.appendItem("topic",topic);
+    mqttData.appendItem("msg",msg.toLocal8Bit());
+    //发布消息
+    m_mqttClient->publishMessage(mqttData);
 }

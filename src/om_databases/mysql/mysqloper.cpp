@@ -99,7 +99,7 @@ bool MySqlOper::executeSql(const QString &sql)
 */
 Entity MySqlOper::getEmployerRecord(const QString &p_key, const QString &value)
 {
-    return getRecord("db_employer",p_key,value);;
+    return getRecord("tb_employer",p_key,value);;
 }
 /**
 * @brief: 获取 指定表中的指定键值 的一条记录  泛型--编程 通用的查询记录

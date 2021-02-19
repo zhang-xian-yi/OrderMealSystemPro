@@ -30,7 +30,7 @@ SUBDIRS += \
     $$PWD/src/om_databases \
     $$PWD/src/om_centralcontrol \
     $$PWD/src/om_childsystem \
-    #$$PWD/src/om_network
+    $$PWD/src/om_network
 
 CONFIG += c++11
 CONFIG -= qml_debug

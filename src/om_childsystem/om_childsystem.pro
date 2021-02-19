@@ -13,6 +13,7 @@ INCLUDEPATH += $$PWD/
 #外部依赖数据
 LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_common
 LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_ui
+LIBS += -L$$PWD/../../generatedFile/destdir/ -lom_network
 
 # generate file path
 MOC_DIR = $$PWD/../../generatedFile/temp/moc

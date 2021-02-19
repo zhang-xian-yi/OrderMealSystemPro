@@ -4,7 +4,6 @@ TEMPLATE = lib
 
 DEFINES = OM_UI_LIBRARY
 
-
 include($$PWD/loginui/loginui.pri)
 include($$PWD/servicerui/servicerui.pri)
 include($$PWD/systemtrayicon/systemtrayicon.pri)
@@ -24,8 +23,10 @@ DLLDESTDIR = $$PWD/../../generatedFile/bin
 
 LIBS += -L$$PWD/../../generatedFile/destdir -lom_common
 
-ROOT_PATH = $$PWD/../../
 #资源文件
-RESOURCES += $$ROOT_PATH/appfile/qrc/login.qrc
-RESOURCES += $$ROOT_PATH/qml.qrc
-RESOURCES += $$ROOT_PATH/appfile/qrc/startApp.qrc
+RESOURCES +=  $$PWD/../../appfile/qrc/login.qrc
+#防止release 版本下 资源文件不存在
+QTQUICK_COMPILER_SKIPPED_RESOURCES += $$PWD/../../qml.qrc
+RESOURCES +=  $$PWD/../../qml.qrc
+
+RESOURCES +=  $$PWD/../../appfile/qrc/startApp.qrc
